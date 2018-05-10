@@ -6,13 +6,13 @@ namespace MidtermPOS
 
 		// validate number of services or items chosen, will be used for menu selection as well
 
-		public static int ValidNum(string input)
+		public static int ValidNumAndConvertToWholeNum()
 		{
 			int convertNum = 0;
 			bool verifying = true;
 			while (verifying)
 			{
-				string _input = Console.ReadLine();
+                string _input = Console.ReadLine();
 				bool validNum = int.TryParse(_input, out convertNum);
 
 				if (!validNum)
@@ -28,13 +28,13 @@ namespace MidtermPOS
 		}
 
 		//validate amount of cash given.
-		public double ValidCashInput(string input)
+		public double ValidCashInput(string _input)
 		{
 			double ValidCash = 0;
 			bool verifying = true;
 			while (verifying)
 			{
-				string _input = Console.ReadLine();
+				_input = Console.ReadLine();
 				bool validNum = double.TryParse(_input, out ValidCash);
 
 				if (!validNum)
