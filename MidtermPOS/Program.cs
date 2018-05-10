@@ -12,10 +12,12 @@ namespace MidtermPOS
     {
         static void Main(string[] args)
         {
-
-            List<Product> products = ReadFile("Product List.txt");
+			List<Product> products = ReadFile("Product List.txt");
 
         }
+
+
+
         private static List<Product> ReadFile(string filename)
         {
             List<Product> products = new List<Product>();
@@ -50,6 +52,35 @@ namespace MidtermPOS
 
             return products;
         }
+
+        // menu
+		public void Menu()
+        {
+
+            // TAKEN FROM PROGRAM (MAIN ARG)
+            Console.WriteLine("Welcome to the ***");
+            bool RuningProgram = true;
+            while (RuningProgram)
+            {
+                //prompts user to purchase a service or item.
+                Console.WriteLine("Would you like to order a service or purchase an item?");
+                Console.Write("Enter 1 for a service or 2 for an item:  ");
+
+                //input validation on user input, converts to int, once validated.
+                int ServOrItResponse = Validator.ValidNum(Console.ReadLine());
+
+
+                // if user does not choose 1 or 2, it will bounce back to 
+                if (ServOrItResponse != 1 || ServOrItResponse != 2)
+                {
+                    continue;
+                }
+
+
+                // TODO:  foreach
+            }
+        }
+
     }
 }
 
