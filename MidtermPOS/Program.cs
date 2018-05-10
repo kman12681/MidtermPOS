@@ -37,6 +37,8 @@ namespace MidtermPOS
 
                 int userpick = Validator.ValidNumAndConvertToWholeNum();
 
+
+
                 // if user does not choose 1 or 2, it will bounce back to
 
                 if (userpick != 1 && userpick != 2)
