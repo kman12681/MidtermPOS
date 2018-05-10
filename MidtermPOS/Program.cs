@@ -11,36 +11,36 @@ namespace MidtermPOS
     {
         static void Main(string[] args)
         {
-            Menu();
-            ShowFullMenu();
-            //ShowInventory();
-        }
+            Console.WriteLine("Welcome to the ***");
 
-        public static void ShowInventory()
+            ChooseProduct();
+            ViewFullMenu();
+            //ShowInventory();
+        }      
+        
+        public static void ChooseProduct()
         {
+            int menuCount = 0;
             foreach (Product p in Product.products)
             {
-                Console.WriteLine($"{p.Name}\t{p.Category}\t{p.Price}\t{p.Description}");
+                menuCount++;
+                Console.WriteLine($"{menuCount}\t{p}");
             }
-        }
-        public static void Menu()
-        {
 
-            // TAKEN FROM PROGRAM (MAIN ARG)
-            Console.WriteLine("Welcome to the ***");
             bool RuningProgram = true;
             while (RuningProgram)
             {
                 //prompts user to purchase a service or item.
-                Console.WriteLine("Would you like to order a service or purchase an item?");
-                Console.Write("Enter 1 for a service or 2 for an item:  ");
+                Console.WriteLine();
+                Console.Write("Pick a menu item: ");                
 
                 int userpick = Validator.ValidNumAndConvertToWholeNum();
 
                 // if user does not choose 1 or 2, it will bounce back to
 
-                if (userpick != 1 && userpick != 2)
+                if (userpick < 1 || userpick > Product.products.Count)
                 {
+                    Console.WriteLine($"Invalid entry. Enter a number between 1 and {Product.products.Count}");
                     continue;
                 }
                 else
@@ -50,6 +50,15 @@ namespace MidtermPOS
                 }
             }
         }
+
+        public static void ViewFullMenu()
+        {
+            foreach (Product p in Product.products)
+            {
+                Console.WriteLine(p);
+            }
+        }
+
         public static void ServiceMenu()
         {
             foreach (Product p in Product.products)
@@ -65,18 +74,14 @@ namespace MidtermPOS
                 if (p.Category.ToLower() == "item")
                 {
                     Console.WriteLine(p);
-
                 }
         }
 
-        public static void ShowFullMenu()
+        public static void ShowInventory()
         {
-            int menuCount = 0;
             foreach (Product p in Product.products)
             {
-                menuCount++;
-                Console.WriteLine($"{menuCount}\t{p}");
-
+                Console.WriteLine($"{p.Name}\t{p.Category}\t{p.Price}\t{p.Description}");
             }
         }
     }
