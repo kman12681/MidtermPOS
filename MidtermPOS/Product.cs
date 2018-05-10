@@ -13,6 +13,7 @@ namespace MidtermPOS
         private string category;
         private string description;
         private double price;
+        private int quantity;
 
         public Product(string name, string category, string description, double price)
         {
@@ -26,6 +27,7 @@ namespace MidtermPOS
         public string Category { get => category; set => category = value; }
         public string Description { get => description; set => description = value; }
         public double Price { get => price; set => price = value; }
+        public int Quantity { get => quantity; set => quantity = value; }
 
         public static List<Product> products = FileImport();
 
