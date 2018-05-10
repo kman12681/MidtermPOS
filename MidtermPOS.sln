@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MidtermPOS", "MidtermPOS\MidtermPOS.csproj", "{1EF3624B-B13D-4CB2-A039-10599F22FBAC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E25786F3-1513-4F9E-87A7-2B94BE8FAE8E}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1EF3624B-B13D-4CB2-A039-10599F22FBAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EF3624B-B13D-4CB2-A039-10599F22FBAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EF3624B-B13D-4CB2-A039-10599F22FBAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EF3624B-B13D-4CB2-A039-10599F22FBAC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {735A59E0-9456-4E47-8A96-C38AA74591AF}
+	EndGlobalSection
+EndGlobal
