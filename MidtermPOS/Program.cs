@@ -11,77 +11,72 @@ namespace MidtermPOS
     {
         static void Main(string[] args)
         {
-            Menu();
-            ShowFullMenu();
-            //ShowInventory();
-        }
-
-        public static void ShowInventory()
-        {
-            foreach (Product p in Product.products)
-            {
-                Console.WriteLine($"{p.Name}\t{p.Category}\t{p.Price}\t{p.Description}");
-            }
-        }
-        public static void Menu()
-        {
-
-            // TAKEN FROM PROGRAM (MAIN ARG)
             Console.WriteLine("Welcome to the ***");
-            bool RuningProgram = true;
-            while (RuningProgram)
+
+            int CHECKNUMBER = Validator.ValidCheckNumber();
+            double CASHAMOUNT = Validator.ValidCashAmount();
+            //ChooseProduct();
+            //ViewFullMenu();
+        }
+
+        public static int ChooseProduct()
+        {
+            while (true)
             {
-                //prompts user to purchase a service or item.
-                Console.WriteLine("Would you like to order a service or purchase an item?");
-                Console.Write("Enter 1 for a service or 2 for an item:  ");
-
-                int userpick = Validator.ValidNumAndConvertToWholeNum();
-
-
-
-                // if user does not choose 1 or 2, it will bounce back to
-
-                if (userpick != 1 && userpick != 2)
+                int menuCount = 0;
+                foreach (Product p in Product.products)
                 {
-                    continue;
+                    menuCount++;
+                    Console.WriteLine($"{menuCount}\t{p}");
                 }
-                else
+
+                bool RuningProgram = true;
+                while (RuningProgram)
                 {
-                    Console.WriteLine("It works!");
-                    RuningProgram = false;
+                    //prompts user to purchase a service or item.
+                    Console.WriteLine();
+                    Console.Write("Pick a menu item: ");
+
+                    int userpick = Validator.ValidNumAndConvertToWholeNum();
+
+                    // if user does not choose 1 or 2, it will bounce back to
+
+                    if (userpick < 1 || userpick > Product.products.Count)
+                    {
+                        Console.WriteLine($"Invalid entry. Enter a number between 1 and {Product.products.Count}");
+                        continue;
+                    }
+                    else
+                    {
+                        return userpick;
+                    }
                 }
             }
         }
-        public static void ServiceMenu()
-        {
-            foreach (Product p in Product.products)
-                if (p.Category.ToLower() == "service")
-                {
-                    Console.WriteLine(p);
-                }
-        }
 
-        public static void ItemMenu()
+        public static void ViewFullMenu()
         {
-            foreach (Product p in Product.products)
-                if (p.Category.ToLower() == "item")
-                {
-                    Console.WriteLine(p);
-
-                }
-        }
-
-        public static void ShowFullMenu()
-        {
-            int menuCount = 0;
             foreach (Product p in Product.products)
             {
-                menuCount++;
-                Console.WriteLine($"{menuCount}\t{p}");
-
+                Console.WriteLine(p);
             }
         }
+
+        public static double SalesTaxCalculator(double input)
+        {
+            double aftertax = (input * .06) + input;
+            return aftertax;
+        }
+
+        public static double SubTotalCalculator(double input)
+        {
+            double subtotal;
+            return subtotal;
+        }
+
+
+
+
     }
 }
-
 
