@@ -27,26 +27,26 @@ namespace MidtermPOS
         }
 
         //validate amount of cash given.
-        public double ValidCashInput(string _input)
-		{
-			double ValidCash = 0;
-			bool verifying = true;
-			while (verifying)
-			{
-				_input = Console.ReadLine();
-				bool validNum = double.TryParse(_input, out ValidCash);
+        public static double ValidDoubler()
+        {
+            double convertNum = 0;
+            bool verifying = true;
+            while (verifying)
+            {
+                string _input = Console.ReadLine();
+                bool validNum = double.TryParse(_input, out convertNum);
 
-				if (!validNum)
-				{
-					Console.WriteLine("Invalid number entered, please enter a valid number.");
-					continue;
-				}
-				else
-				{ verifying = false; }
+                if (!validNum)
+                {
+                    Console.WriteLine("Invalid number entered, please enter a valid number.");
+                    continue;
+                }
+                else
+                { verifying = false; }
 
-			}
-			return ValidCash;
-		}
-	}
+            }
+            return convertNum;
+        }
+    }
 }
 
