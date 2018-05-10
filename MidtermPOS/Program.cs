@@ -10,48 +10,25 @@ namespace MidtermPOS
     {
         static void Main(string[] args)
         {
-<<<<<<< HEAD
-            ShowInventory();
-           
+            
+
+            //ServiceOrItemMenu();
+            //ItemMenu();
+            ShowFullMenu();
+
+
         }
-=======
-			List<Product> products = ReadFile("Product List.txt");
-
-        }
-
-
-
-        private static List<Product> ReadFile(string filename)
-        {
-            List<Product> products = new List<Product>();
-            StreamReader sr = null;
-            try
-            {
-                sr = new StreamReader(filename);
-                while (!sr.EndOfStream)
-                {
-                    string line = sr.ReadLine();
-                    string[] tokens = line.Split('\t');
-                    string name = tokens[0];
-                    string category = tokens[1];
-                    string description = tokens[2];
-                    double price = double.Parse(tokens[3]);
->>>>>>> e1895dcf6f00ef4d8550b061f56791a4022deffa
 
         public static void ShowInventory()
         {
-            
-            foreach (Product p in Inventory.FileImport())
+
+            foreach (Product p in Product.products)
             {
                 Console.WriteLine($"{p.Name}\t{p.Category}\t{p.Price}\t{p.Description}");
-                
             }
         }
-
-<<<<<<< HEAD
-=======
         // menu
-		public void Menu()
+        public static void ServiceOrItemMenu()
         {
 
             // TAKEN FROM PROGRAM (MAIN ARG)
@@ -66,19 +43,54 @@ namespace MidtermPOS
                 //input validation on user input, converts to int, once validated.
                 int ServOrItResponse = Validator.ValidNum(Console.ReadLine());
 
-
                 // if user does not choose 1 or 2, it will bounce back to 
                 if (ServOrItResponse != 1 || ServOrItResponse != 2)
                 {
                     continue;
                 }
-
+                else if (ServOrItResponse == 1)
+                {
+                    Console.WriteLine("valid");
+                    ServiceMenu();
+                }
+                else
+                {
+                    ItemMenu();
+                }
 
                 // TODO:  foreach
             }
         }
->>>>>>> e1895dcf6f00ef4d8550b061f56791a4022deffa
 
+        public static void ServiceMenu()
+        {
+            foreach (Product p in Product.products)
+                if (p.Category.ToLower() == "service")
+                {
+                    Console.WriteLine(p);
+                }
+        }
+
+        public static void ItemMenu()
+        {
+            foreach (Product p in Product.products)
+                if (p.Category.ToLower() == "item")
+                {
+                    Console.WriteLine(p);
+                    
+                }
+        }
+
+        public static void ShowFullMenu()
+        {
+            int menuCount = 0;
+            foreach (Product p in Product.products)
+            {
+                menuCount++;
+                Console.WriteLine($"{menuCount}\t{p}");
+
+            }
+        }
     }
 }
 

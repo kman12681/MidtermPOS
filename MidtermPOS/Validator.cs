@@ -12,10 +12,10 @@ namespace MidtermPOS
 			bool verifying = true;
 			while (verifying)
 			{
-				string _input = Console.ReadLine();
-				bool validNum = int.TryParse(_input, out convertNum);
+				//_input = Console.ReadLine();
+				//bool validNum = int.TryParse(_input, out convertNum);
 
-				if (!validNum)
+				if (!int.TryParse(_input, out convertNum))
 				{
 					Console.WriteLine("Invalid number entered, please enter a valid number.");
 					continue;
@@ -34,7 +34,7 @@ namespace MidtermPOS
 			bool verifying = true;
 			while (verifying)
 			{
-				string _input = Console.ReadLine();
+				_input = Console.ReadLine();
 				bool validNum = double.TryParse(_input, out ValidCash);
 
 				if (!validNum)
