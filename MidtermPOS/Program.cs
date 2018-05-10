@@ -5,30 +5,25 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MidtermPOS
+
 {
     class Program
     {
         static void Main(string[] args)
         {
-            
-
-            //ServiceOrItemMenu();
-            //ItemMenu();
+            Menu();
             ShowFullMenu();
-
-
+            //ShowInventory();
         }
 
         public static void ShowInventory()
         {
-
             foreach (Product p in Product.products)
             {
                 Console.WriteLine($"{p.Name}\t{p.Category}\t{p.Price}\t{p.Description}");
             }
         }
-        // menu
-        public static void ServiceOrItemMenu()
+        public static void Menu()
         {
 
             // TAKEN FROM PROGRAM (MAIN ARG)
@@ -40,28 +35,21 @@ namespace MidtermPOS
                 Console.WriteLine("Would you like to order a service or purchase an item?");
                 Console.Write("Enter 1 for a service or 2 for an item:  ");
 
-                //input validation on user input, converts to int, once validated.
-                int ServOrItResponse = Validator.ValidNum(Console.ReadLine());
+                int userpick = Validator.ValidNumAndConvertToWholeNum();
 
-                // if user does not choose 1 or 2, it will bounce back to 
-                if (ServOrItResponse != 1 || ServOrItResponse != 2)
+                // if user does not choose 1 or 2, it will bounce back to
+
+                if (userpick != 1 && userpick != 2)
                 {
                     continue;
                 }
-                else if (ServOrItResponse == 1)
-                {
-                    Console.WriteLine("valid");
-                    ServiceMenu();
-                }
                 else
                 {
-                    ItemMenu();
+                    Console.WriteLine("It works!");
+                    RuningProgram = false;
                 }
-
-                // TODO:  foreach
             }
         }
-
         public static void ServiceMenu()
         {
             foreach (Product p in Product.products)
@@ -77,7 +65,7 @@ namespace MidtermPOS
                 if (p.Category.ToLower() == "item")
                 {
                     Console.WriteLine(p);
-                    
+
                 }
         }
 
