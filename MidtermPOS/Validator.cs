@@ -6,7 +6,7 @@ namespace MidtermPOS
 
 		// validate number of services or items chosen, will be used for menu selection as well
 
-		public static int ValidNum(string _input)
+		public static int ValidNum(string input)
 		{
 			int convertNum = 0;
 			bool verifying = true;
@@ -28,7 +28,7 @@ namespace MidtermPOS
 		}
 
 		//validate amount of cash given.
-		public static double ValidCashInput(string _input)
+		public double ValidCashInput(string input)
 		{
 			double ValidCash = 0;
 			bool verifying = true;

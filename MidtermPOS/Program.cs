@@ -12,7 +12,7 @@ namespace MidtermPOS
     {
         static void Main(string[] args)
         {
-			List<Product> products = ReadFile("Product List.txt");
+			Menu();
 
         }
 
@@ -54,7 +54,7 @@ namespace MidtermPOS
         }
 
         // menu
-		public void Menu()
+		public static void Menu()
         {
 
             // TAKEN FROM PROGRAM (MAIN ARG)
@@ -66,15 +66,19 @@ namespace MidtermPOS
                 Console.WriteLine("Would you like to order a service or purchase an item?");
                 Console.Write("Enter 1 for a service or 2 for an item:  ");
 
-                //input validation on user input, converts to int, once validated.
-                int ServOrItResponse = Validator.ValidNum(Console.ReadLine());
+				//input validation on user input, converts to int, once validated.
+				string userresponse = Console.ReadLine();
+				int ServOrItResponse = Validator.ValidNum(userresponse);
 
 
-                // if user does not choose 1 or 2, it will bounce back to 
-                if (ServOrItResponse != 1 || ServOrItResponse != 2)
-                {
-                    continue;
-                }
+				// if user does not choose 1 or 2, it will bounce back to 
+				if (ServOrItResponse != 1 || ServOrItResponse != 2)
+				{
+					continue;
+				}
+
+                //display menu
+
 
 
                 // TODO:  foreach
