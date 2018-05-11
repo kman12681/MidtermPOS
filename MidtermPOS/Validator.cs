@@ -99,7 +99,7 @@ namespace MidtermPOS
         public static string GetAValidYorN()
         {
             bool askingYorN = true;
-            string response="";
+            string response = "";
             while (askingYorN)
             {
 
@@ -111,7 +111,7 @@ namespace MidtermPOS
                     continue;
                 }
                 else { askingYorN = false; }
-                
+
             }
             return response;
         }
@@ -121,11 +121,14 @@ namespace MidtermPOS
             //bool AskingForPaymentMethod = true;
             while (true)
             {
-                string input = Console.ReadLine();
+
+
+                string input = Console.ReadLine().ToLower();
 
                 if (!(input.ToLower() == "cash") && !(input.ToLower() == "credit") && !(input.ToLower() == "check") && !(input.ToLower() == "gift card"))
                 {
-                    Console.WriteLine("Invalid payment method entered. Please enter either cash, credit, check or gift card.");
+                    Console.WriteLine("Invalid payment method entered. Please enter either cash, check or credit.");
+
 
 
                     // AskingForPaymentMethod = true;
@@ -138,27 +141,56 @@ namespace MidtermPOS
             }
         }
 
-        //public static double ValidateCreditCard(string paymentMethod)
+        // checks for valid long number
+        public static long ValidNumAndConvertToWholeLong()
+        {
+            long convertNum = 0;
+            bool verifying = true;
+            while (verifying)
+            {
+                string _input = Console.ReadLine();
+                bool validNum = long.TryParse(_input, out convertNum);
+
+                if (!validNum)
+                {
+                    Console.WriteLine("Invalid number entered, please enter a valid number.");
+                    continue;
+                }
+                else
+                { verifying = false; }
+
+            }
+            return convertNum;
+        }
+
+        //checks for valid credit card number
+        public static double ValidateCreditCard(string paymentMethod)
+        {
+
+            while (true)
+            {
+                Console.WriteLine("Please enter credit card number");
+                //string payment = Console.ReadLine();
+                long paymentDouble = ValidNumAndConvertToWholeLong();
+
+                if (paymentMethod == "credit" && Regex.IsMatch(paymentDouble.ToString(), @"\b(?:3[47]\d|(?:4\d|5[1-5]|65)\d{2}|6011)\d{12}\b"))
+                {
+                    Console.WriteLine("Thank you for entering a credit card number!");
+                    return paymentDouble;
+
+
+                }
+                else
+                {
+                    Console.WriteLine("That was not a valid credit card number");
+                }
+            }
+        }
+
+        //public static double VerifyAmountPaid()
         //{
 
-        //    while (true)
-        //    {
-        //        Console.WriteLine("Please enter credit card number");
-        //        //string payment = Console.ReadLine();
-        //        long paymentDouble = ValidNumAndConvertToWholelong();
 
-        //        if (paymentMethod == "credit" && Regex.IsMatch(paymentDouble.ToString(), @"\b(?:3[47]\d|(?:4\d|5[1-5]|65)\d{2}|6011)\d{12}\b"))
-        //        {
-        //            Console.WriteLine("Thank you for entering a credit card number!");
-        //            return paymentDouble;
-
-
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("That was not a valid credit card number");
-        //        }
-        //    }
         //}
     }
 }

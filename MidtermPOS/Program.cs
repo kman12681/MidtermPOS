@@ -8,19 +8,17 @@ namespace MidtermPOS
 {
     class Program
     {
-
         static void Main(string[] args)
         {
             // welcomes the user
-            Console.WriteLine("Welcome to the ***");
+            Console.WriteLine("Welcome to Treat Ya'self by Drones");
 
             //runs the shoppingcart method
             ShoppingCart();
 
-            // press any key to exit
-            Console.ReadKey();
-
         }
+
+        // method for choosing product from menu
         public static int ChooseProduct()
         {
             while (true)
@@ -57,6 +55,7 @@ namespace MidtermPOS
             }
         }
 
+        // view entire products menu
         public static void ViewFullMenu()
         {
             foreach (Product p in Product.products)
@@ -64,12 +63,9 @@ namespace MidtermPOS
                 Console.WriteLine(p);
             }
 
-
-
-
-            // Console.WriteLine(Product.products[0].Quantity);
-
         }
+
+        // view a specific menu item
 
         public static void ViewSingleMenuItem()
         {
@@ -93,7 +89,7 @@ namespace MidtermPOS
                 Console.WriteLine("How many would you like?");
                 int quantity = Validator.ValidNumAndConvertToWholeNum();
 
-                if (quantity != 0)
+                if (quantity != 0) // can I edit?
                 {
                     //adds item to the cartList and updates the quantity from 0.
                     Product.cartList.Add(Product.products[menuChoice]);
@@ -125,14 +121,22 @@ namespace MidtermPOS
 
                     if (completePurchQ != "y")
                     {
+                        Console.WriteLine("Order cancelled.");
                         continue;
                     }
+
+
+                    //TODO:  Payment menu, then a display receipt method
+
+                    PaymentMenu();
+
                     Console.WriteLine("Goodbye!");
                     shopping = false;
                 }
             }
         }
 
+        //  valudates menuchoice
         public static bool IsValidMenuChoice(int _input)
         {
             _input = Validator.ValidNumAndConvertToWholeNum();
@@ -163,5 +167,32 @@ namespace MidtermPOS
             Console.WriteLine($"TAX: ${cartTotalPrice*.06}");
             Console.WriteLine($"GRAND TOTAL: ${cartTotalPrice * .06 + cartTotalPrice}");
         }
+
+        //requests desired payment method from user
+        static void PaymentMenu()
+        {
+            Console.WriteLine("Treat Ya'self by Drones accepts Cash, Check or Credit");
+            Console.WriteLine("Which method of payment would you like to use for this order?");
+
+            string userPaymentChoice = Validator.ValidPaymentMethod();
+
+            if (userPaymentChoice == "cash")
+            {
+                Validator.ValidCashAmount();
+            }
+            else if (userPaymentChoice == "check")
+            {
+                Validator.ValidPaymentMethod();
+            }
+            else if (userPaymentChoice == "credit")
+            {
+                Validator.ValidNumAndConvertToWholeLong();
+            }
+
+        }
+
+
+
+
     }
 }
