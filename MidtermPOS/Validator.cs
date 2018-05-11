@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using System.Globalization;
+using System.Threading;
 
 namespace MidtermPOS
 {
@@ -173,11 +175,16 @@ namespace MidtermPOS
         //checks for valid credit card number
         public static void ValidateCreditCard()
         {
+            CultureInfo culture = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+            culture.DateTimeFormat.ShortDatePattern = "MM/yy";
+            culture.DateTimeFormat.LongTimePattern = "";
+            Thread.CurrentThread.CurrentCulture = culture;
+
             bool askingforDaCC = true;
             while (askingforDaCC)
             {
                 //user prompted to enter a CC num (comes in as string)
-                Console.WriteLine("Please enter a valid credit card number");
+                Console.WriteLine("Please enter a valid Visa/Mastercard credit card number. ");
                 string _input = Console.ReadLine();
 
                 
@@ -191,7 +198,7 @@ namespace MidtermPOS
 
                 else
                 {
-                    if (Regex.IsMatch(convertNum.ToString(), "([0-9]){16}"))
+                    if (Regex.IsMatch(convertNum.ToString(), "^([0-9]){16}$"))
 
                     {
 
@@ -208,6 +215,70 @@ namespace MidtermPOS
 
                 }
             }
+
+
+            bool AskForExpDate = true;
+            while (AskForExpDate)
+            {
+                Console.WriteLine("Please enter a valid Expiration Date for the card.\n Format: mm/YY");
+                string _input = Console.ReadLine();
+
+                DateTime expDate = DateTime.Parse(_input);
+
+                if (expDate > DateTime.Now)
+
+                {
+
+                    Console.WriteLine("Thank you for entering a validexpiration date!");
+                    AskForExpDate = false;
+                }
+
+                // (valid doubles entered at input and valid CC format, per regex)
+                else
+                {
+                    Console.WriteLine("You've entered an invalid expiration date");
+                    continue;
+                }
+            }
+
+
+            bool AskForCVV = true;
+            while(AskForCVV)
+            {
+                Console.WriteLine("Please enter a valid CVV");
+                string _input = Console.ReadLine();
+
+                //converts to int, if _input is integers
+                bool validNum = int.TryParse(_input, out int convertNum);
+                if (!validNum)
+                {
+                    Console.WriteLine("Invalid CVV number entered, please enter a valid  CVV number.");
+                    continue;
+                }
+
+                else
+                {
+                    if (Regex.IsMatch(convertNum.ToString(), "^([0-9]){3}$"))
+
+                    {
+
+                        Console.WriteLine("Thank you for entering a valid CVV number!");
+                        AskForCVV = false;
+                    }
+
+                    // (valid doubles entered at input and valid CC format, per regex)
+                    else
+                    {
+                        Console.WriteLine("You've entered an invalid CVV number");
+                        continue;
+                    }
+
+                }
+            }
+
+
+
+
         }
     }
 }

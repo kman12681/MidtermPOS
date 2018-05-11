@@ -185,7 +185,16 @@ namespace MidtermPOS
                 }
                 else if (response == "edit")
                 {
-                    ChangeQuantityInCart();
+                    if (Product.cartList.Count <= 0)
+                    {
+                        Console.WriteLine("There are no items in the cart to edit.");
+                        //TODO: FIX THIS INFINITE LOOP
+                        continue;
+                    }
+                    else
+                    {
+                        ChangeQuantityInCart();
+                    }
                 }
                 else if (response == "add")
                 {
@@ -226,8 +235,8 @@ namespace MidtermPOS
         //requests desired payment method from user
         public static void PaymentMenu()
         {
-            Console.WriteLine("Treat Ya'self by Drones accepts Cash, Check or Credit");
             Console.WriteLine("Which method of payment would you like to use for this order?");
+            Console.WriteLine("Treat Ya'self by Drones accepts Cash, Check or Credit");
 
             userPaymentChoice = Validator.ValidPaymentMethod();
 
