@@ -55,7 +55,8 @@ namespace MidtermPOS
             bool verifyingCheckNumn = true;
             while (verifyingCheckNumn)
             {
-                Console.WriteLine("Enter a valid check number:");
+                Console.WriteLine("Your Account and Routing number are already stored in our system.");
+                Console.WriteLine("Please locate and enter the check number being used for this order.");
                 string _input = Console.ReadLine();
                 Match match = Regex.Match(_input, "([0-9]){3}");
                 bool validNum = int.TryParse(_input, out validnum);
@@ -79,7 +80,7 @@ namespace MidtermPOS
             bool verifying = true;
             while (verifying)
             {
-                Console.WriteLine("Please enter a valid amount of cash.  (Dollars only, change is not accepted)");
+                Console.WriteLine("Please enter a valid amount of cash that will be paid.  (Dollars only, change is not accepted)");
                 string _input = Console.ReadLine();
                 bool validNum = int.TryParse(_input, out convertNum);
 
@@ -88,9 +89,18 @@ namespace MidtermPOS
                     Console.WriteLine("Invalid cash amount.");
                     continue;
                 }
+
+                if (Program.grandtotal > convertNum)
+                {
+                    Console.WriteLine($"You entered ${convertNum} while the grand total is ${Program.grandtotal}");
+                    continue;
+                }
                 else
-                    Console.WriteLine("Valid amount of cash accepted!");
-                { verifying = false; }
+                {
+                    double changeGiven = (convertNum - Program.grandtotal);
+                    Console.WriteLine($"Your change is {changeGiven}");
+                    verifying = false;
+                }
 
             }
             return convertNum;
@@ -99,7 +109,7 @@ namespace MidtermPOS
         public static string GetAValidYorN()
         {
             bool askingYorN = true;
-            string response = "";
+            string response="";
             while (askingYorN)
             {
 
@@ -111,7 +121,7 @@ namespace MidtermPOS
                     continue;
                 }
                 else { askingYorN = false; }
-
+                
             }
             return response;
         }
@@ -121,14 +131,11 @@ namespace MidtermPOS
             //bool AskingForPaymentMethod = true;
             while (true)
             {
-
-
                 string input = Console.ReadLine().ToLower();
 
                 if (!(input.ToLower() == "cash") && !(input.ToLower() == "credit") && !(input.ToLower() == "check") && !(input.ToLower() == "gift card"))
                 {
                     Console.WriteLine("Invalid payment method entered. Please enter either cash, check or credit.");
-
 
 
                     // AskingForPaymentMethod = true;
@@ -164,32 +171,43 @@ namespace MidtermPOS
         }
 
         //checks for valid credit card number
-        public static double ValidateCreditCard(string paymentMethod)
+        public static void ValidateCreditCard()
         {
-
-            while (true)
+            bool askingforDaCC = true;
+            while (askingforDaCC)
             {
-                Console.WriteLine("Please enter credit card number");
-                //string payment = Console.ReadLine();
-                long paymentDouble = ValidNumAndConvertToWholeLong();
+                //user prompted to enter a CC num (comes in as string)
+                Console.WriteLine("Please enter a valid credit card number");
+                string _input = Console.ReadLine();
 
-                if (paymentMethod == "credit" && Regex.IsMatch(paymentDouble.ToString(), @"\b(?:3[47]\d|(?:4\d|5[1-5]|65)\d{2}|6011)\d{12}\b"))
+                
+                //converts to long, if _input is integers
+                bool validNum = long.TryParse(_input, out long convertNum);
+                if (!validNum)
                 {
-                    Console.WriteLine("Thank you for entering a credit card number!");
-                    return paymentDouble;
-
-
+                    Console.WriteLine("Invalid number entered, please enter a valid number.");
+                    continue;
                 }
+
                 else
                 {
-                    Console.WriteLine("That was not a valid credit card number");
+                    if (Regex.IsMatch(convertNum.ToString(), "([0-9]){16}"))
+
+                    {
+
+                        Console.WriteLine("Thank you for entering a credit card number!");
+                        askingforDaCC = false;
+                    }
+
+                    // (valid doubles entered at input and valid CC format, per regex)
+                    else
+                    {
+                        Console.WriteLine("You've entered an invalid credit card number");
+                        continue;
+                    }
+
                 }
             }
         }
-        //public static double VerifyAmountPaid()
-        //{
-
-
-        //}
     }
 }
