@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MidtermPOS
 {
-    class Program
+    public static class Program
     {
         static void Main(string[] args)
         {
@@ -92,12 +92,12 @@ namespace MidtermPOS
                 if (quantity != 0) // can I edit?
                 {
                     //adds item to the cartList and updates the quantity from 0.
-                    Cart.cartList.Add(Product.products[menuChoice]);
-                    Cart.cartList[itemadded].Quantity = quantity;
+                    Product.cartList.Add(Product.products[menuChoice]);
+                    Product.cartList[itemadded].Quantity = quantity;
 
                     ////prints a linetotal
-                    double linetotal = (Cart.cartList[itemadded].Quantity * Cart.cartList[itemadded].Price);
-                    Console.WriteLine(Cart.cartList[itemadded].Name + " | Quantity of " + quantity + " x $" + Cart.cartList[itemadded].Price + " = $" + linetotal);
+                    double linetotal = (Product.cartList[itemadded].Quantity * Product.cartList[itemadded].Price);
+                    Console.WriteLine(Product.cartList[itemadded].Name + " | Quantity of " + quantity + " x $" + Product.cartList[itemadded].Price + " = $" + linetotal);
 
                     // increments the interaction with the shopping cart by 1.
                     itemadded++;
@@ -130,7 +130,7 @@ namespace MidtermPOS
 
                     PaymentMenu();
 
-                    Console.WriteLine("Goodbye!");
+                    Console.WriteLine("Thank you for your order!");
                     shopping = false;
                 }
             }
@@ -150,26 +150,28 @@ namespace MidtermPOS
                 return true;
             }
         }
-
+        public static double grandtotal = 0;
         //prints the shopping cart contents
         public static void PrintCart()
         {
             //declares and initializes cart's total price to 0.
             double cartTotalPrice = 0;
             Console.WriteLine("\nSHOPPING CART");
-            foreach (Product c in Cart.cartList)
+            foreach (Product c in Product.cartList)
             {
                 double groupprice = (c.Quantity * c.Price);
                 Console.WriteLine($"{c.Name}  Qty:{c.Quantity} x ${c.Price} = ${groupprice}");
                 cartTotalPrice = cartTotalPrice + groupprice;
             }
+
+            grandtotal = (cartTotalPrice * .06) + cartTotalPrice;
             Console.WriteLine($"SUBTOTAL: ${cartTotalPrice}");
             Console.WriteLine($"TAX: ${cartTotalPrice*.06}");
-            Console.WriteLine($"GRAND TOTAL: ${cartTotalPrice * .06 + cartTotalPrice}");
+            Console.WriteLine($"GRAND TOTAL: ${grandtotal}");
         }
 
         //requests desired payment method from user
-        static void PaymentMenu()
+        public static void PaymentMenu()
         {
             Console.WriteLine("Treat Ya'self by Drones accepts Cash, Check or Credit");
             Console.WriteLine("Which method of payment would you like to use for this order?");
@@ -182,14 +184,15 @@ namespace MidtermPOS
             }
             else if (userPaymentChoice == "check")
             {
-                Validator.ValidPaymentMethod();
+                Validator.ValidCheckNumber();
             }
             else if (userPaymentChoice == "credit")
             {
-                Validator.ValidNumAndConvertToWholeLong();
+                Validator.ValidateCreditCard();
             }
 
         }
+       
 
 
 
