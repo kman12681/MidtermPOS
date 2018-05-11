@@ -186,7 +186,6 @@ namespace MidtermPOS
                 }
             }
         }
-
         //public static double VerifyAmountPaid()
         //{
 
