@@ -55,6 +55,7 @@ namespace MidtermPOS
             bool verifyingCheckNumn = true;
             while (verifyingCheckNumn)
             {
+                Console.WriteLine();
                 Console.WriteLine("Enter a valid check number:");
                 string _input = Console.ReadLine();
                 Match match = Regex.Match(_input, "([0-9]){3}");

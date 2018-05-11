@@ -20,14 +20,6 @@ namespace MidtermPOS
             
 		}
 
-        public static void ViewFullMenu()
-        {
-            foreach (Product p in Product.products)
-            {
-                Console.WriteLine(p);
-            }
-        }
-
         public static int ChooseProduct()
 		{
 			while (true)
@@ -76,15 +68,17 @@ namespace MidtermPOS
 				int menuChoice = ChooseProduct();
 				menuChoice--;
 
-                //gets quantity of menu item
+                //gets users requested quantity of menu item
 				Console.WriteLine("How many would you like?");
                 int quantity = Validator.ValidNumAndConvertToWholeNum();
 
+                //adds item to the cartList and changes quantity
                 Cart.cartList.Add(Product.products[menuChoice]);
-                
                 Cart.cartList[itemadded].Quantity = quantity;
 
-                Console.WriteLine(Cart.cartList[itemadded].ToStringWithQuantity());
+                //
+                double linetotal = (Cart.cartList[itemadded].Quantity * Cart.cartList[itemadded].Price);
+                Console.WriteLine(Cart.cartList[itemadded].Name +" | Quantity of " +Cart.cartList[itemadded].Quantity + " x $" + Cart.cartList[itemadded].Price+" = $"+linetotal );
                 itemadded++;
 
                 Console.WriteLine("Keep shopping? (y/n)");
