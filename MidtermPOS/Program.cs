@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MidtermPOS
 {
-    class Program
+    public static class Program
     {
         static void Main(string[] args)
         {
@@ -82,7 +82,7 @@ namespace MidtermPOS
         {
             //counter for items being added to the cart
             int itemadded = 0;
-
+            double linetotal = 0;
             //while loop for shopping, allowing multiple items to be added
             bool shopping = true;
             while (shopping)
@@ -97,12 +97,12 @@ namespace MidtermPOS
                 if (quantity != 0) // can I edit?
                 {
                     //adds item to the cartList and updates the quantity from 0.
-                    Cart.cartList.Add(Product.products[menuChoice]);
-                    Cart.cartList[itemadded].Quantity = quantity;
+                    Product.cartList.Add(Product.products[menuChoice]);
+                    Product.cartList[itemadded].Quantity = quantity;
 
                     ////prints a linetotal
-                    double linetotal = (Cart.cartList[itemadded].Quantity * Cart.cartList[itemadded].Price);
-                    Console.WriteLine(Cart.cartList[itemadded].Name + " | Quantity of " + quantity + " x $" + Cart.cartList[itemadded].Price + " = $" + linetotal);
+                    linetotal = (Product.cartList[itemadded].Quantity * Product.cartList[itemadded].Price);
+                    Console.WriteLine(Product.cartList[itemadded].Name + " | Quantity of " + quantity + " x $" + Product.cartList[itemadded].Price + " = $" + linetotal);
 
                     // increments the interaction with the shopping cart by 1.
                     itemadded++;
@@ -134,9 +134,23 @@ namespace MidtermPOS
                     //TODO:  Payment menu, then a display receipt method
 
                     PaymentMenu();
+                   
+                    //Console.WriteLine(Product.cartList[itemadded].Name + " | Quantity of " + quantity + " x $" + Product.cartList[itemadded].Price + " = $" + linetotal);
 
-                    Console.WriteLine("Goodbye!");
-                    shopping = false;
+                    Receipt();
+                    Console.WriteLine("Would you like to place another order?");
+                    string userresponse = Validator.GetAValidYorN();
+                    if (userresponse == "y")
+                    {
+                        continue;
+                    }
+                        else
+                    {
+                        shopping = false;
+                        Console.WriteLine("Thank you!");
+                        Console.ReadKey();
+                    }
+
                 }
             }
         }
@@ -147,7 +161,7 @@ namespace MidtermPOS
             _input = Validator.ValidNumAndConvertToWholeNum();
             if (_input <= 0 && _input > Product.products.Count())
             {
-                Console.WriteLine("That item does not exist");
+                Console.WriteLine("That item does not exist.");
                 return false;
             }
             else
@@ -155,34 +169,43 @@ namespace MidtermPOS
                 return true;
             }
         }
-
+        public static double grandtotal = 0;
         //prints the shopping cart contents
         public static void PrintCart()
         {
             //declares and initializes cart's total price to 0.
             double cartTotalPrice = 0;
             Console.WriteLine("\nSHOPPING CART");
+
             //Headers for Shopping Cart
             Console.WriteLine($"\n{"ITEM NAME",-29}{"QTY",-13}TOTAL");
             Console.WriteLine("============================ ========     =====\n");
-            foreach (Product c in Cart.cartList)
+
+            foreach (Product c in Product.cartList)
+
             {
                 double groupprice = (c.Quantity * c.Price);
                 Console.WriteLine($"{c.Name,-25}   {c.Quantity,2} x  ${c.Price,-3} =  ${groupprice,-3}");
                 cartTotalPrice = cartTotalPrice + groupprice;
             }
-            Console.WriteLine($"\n\n{"SUBTOTAL",-15} $ {cartTotalPrice, 0:N2}");
-            Console.WriteLine($"{"TAX",-15} $ {(cartTotalPrice*.06), 0:N2}");
-            Console.WriteLine($"{"GRAND TOTAL",-15} $ {(cartTotalPrice * .06 + cartTotalPrice), 0:N2}");
+
+
+            grandtotal = (cartTotalPrice * .06) + cartTotalPrice;
+            Console.WriteLine($"\n\n{"SUBTOTAL",-15} $ {cartTotalPrice, 5:F2}");
+            Console.WriteLine($"{"TAX",-15} $ {(cartTotalPrice*.06), 5:F2}");
+            Console.WriteLine($"{"GRAND TOTAL",-15} $ {grandtotal, 5:F2}");
+
         }
 
-        //requests desired payment method from user
-        static void PaymentMenu()
-        {
-            Console.WriteLine("Treat Ya'self by Drones accepts Cash, Check or Credit");
-            Console.WriteLine("Which method of payment would you like to use for this order?");
+       public static string userPaymentChoice = "";
 
-            string userPaymentChoice = Validator.ValidPaymentMethod();
+        //requests desired payment method from user
+        public static void PaymentMenu()
+        {
+            Console.WriteLine("Which method of payment would you like to use for this order?");
+            Console.WriteLine("Treat Ya'self by Drones accepts Cash, Check or Credit");
+
+            userPaymentChoice = Validator.ValidPaymentMethod();
 
             if (userPaymentChoice == "cash")
             {
@@ -190,14 +213,36 @@ namespace MidtermPOS
             }
             else if (userPaymentChoice == "check")
             {
-                Validator.ValidPaymentMethod();
+                Validator.ValidCheckNumber();
             }
             else if (userPaymentChoice == "credit")
             {
-                Validator.ValidNumAndConvertToWholeLong();
+                Validator.ValidateCreditCard();
             }
 
         }
+
+        public static void Receipt()
+        {
+            Console.WriteLine("Order Completed!");
+            //declares and initializes cart's total price to 0.
+            double cartTotalPrice = 0;
+            Console.WriteLine("\nItems Ordered:");
+            foreach (Product c in Product.cartList)
+            {
+                double groupprice = (c.Quantity * c.Price);
+                Console.WriteLine($"{c.Name}  Qty:{c.Quantity} x ${c.Price} = ${groupprice}");
+                cartTotalPrice = cartTotalPrice + groupprice;
+            }
+
+            grandtotal = (cartTotalPrice * .06) + cartTotalPrice;
+            Console.WriteLine($"SUBTOTAL: ${cartTotalPrice}");
+            Console.WriteLine($"TAX: ${cartTotalPrice * .06}");
+            Console.WriteLine($"GRAND TOTAL: ${grandtotal}");
+            Console.WriteLine($"Method of payment used: {userPaymentChoice}");
+
+        }
+       
 
 
 
