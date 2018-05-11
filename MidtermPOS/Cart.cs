@@ -8,7 +8,7 @@ namespace MidtermPOS
 {
     class Cart : Product
     {
-		
+
 
 
         public Cart(string name, string category, string description, double price, int _quantity) : base(name, category, description, price)
@@ -21,14 +21,15 @@ namespace MidtermPOS
             return base.ToString() + "{Description}";
         }
 
-        public string ToStringWithQuantity()
-        {
-            return ($"{Name}\t\t\t\t{Quantity}");
+        //public string ToStringWithQuantity()
+        //{
+        //    return ($"{Name}\t\t\t\t{Quantity}");
 
-        }
+        //}
 
 
-        // calculates subtotal for each item in cartList, returns a double value.
+
+        // calculates subtotal immediatelty after delcaring quantity in cart.
         public static double SubTotaler()
         {
             double subTotal = 0;

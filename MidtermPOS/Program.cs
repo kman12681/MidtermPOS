@@ -13,13 +13,16 @@ namespace MidtermPOS
 		{
             // welcomes the user
 			Console.WriteLine("Welcome to the ***");
-
+            
+            //runs the shoppingcart method
             ShoppingCart();
-            Console.WriteLine($"The Subtotal is {Cart.SubTotaler()} ");
+
+            // press any key to exit
             Console.ReadKey();
             
 		}
 
+        // ShoppingCart method uses this to choose a product number.
         public static int ChooseProduct()
 		{
 			while (true)
@@ -72,15 +75,24 @@ namespace MidtermPOS
 				Console.WriteLine("How many would you like?");
                 int quantity = Validator.ValidNumAndConvertToWholeNum();
 
-                //adds item to the cartList and changes quantity
-                Cart.cartList.Add(Product.products[menuChoice]);
-                Cart.cartList[itemadded].Quantity = quantity;
+                if (quantity != 0)
+                {
+                    //adds item to the cartList and updates the quantity from 0.
+                    Cart.cartList.Add(Product.products[menuChoice]);
+                    Cart.cartList[itemadded].Quantity = quantity;
 
-                //
-                double linetotal = (Cart.cartList[itemadded].Quantity * Cart.cartList[itemadded].Price);
-                Console.WriteLine(Cart.cartList[itemadded].Name +" | Quantity of " +Cart.cartList[itemadded].Quantity + " x $" + Cart.cartList[itemadded].Price+" = $"+linetotal );
-                itemadded++;
+                    ////prints a linetotal
+                    double linetotal = (Cart.cartList[itemadded].Quantity * Cart.cartList[itemadded].Price);
+                    Console.WriteLine(Cart.cartList[itemadded].Name + " | Quantity of " + quantity + " x $" + Cart.cartList[itemadded].Price + " = $" + linetotal);
 
+                    // increments the interaction with the shopping cart by 1.
+                    itemadded++;
+                }
+                else
+                {
+                    Console.WriteLine("Nothing added to the cart");
+                }
+                //keep shopping yey or ney
                 Console.WriteLine("Keep shopping? (y/n)");
                 string response = Validator.GetAValidYorN();
 				if (response == "y")
@@ -89,7 +101,8 @@ namespace MidtermPOS
 				}
 				else
 				{
-					shopping = false;
+                    PrintCart();
+                    shopping = false;
 				}
 			}         
 		}
@@ -110,5 +123,20 @@ namespace MidtermPOS
                 return true;
             }
         }
-	}
+
+        //prints the shopping cart contents
+        public static void PrintCart()
+        {
+            //declares and initializes cart's total price to 0.
+            double cartTotalPrice = 0;
+            Console.WriteLine("\nSHOPPING CART");
+            foreach (Product c in Cart.cartList)
+            {
+                double groupprice = (c.Quantity * c.Price);
+                Console.WriteLine($"{c.Name}  Qty:{c.Quantity} x ${c.Price} = ${groupprice}");
+                cartTotalPrice = cartTotalPrice + groupprice;
+            }
+            Console.WriteLine($"TOTAL: ${cartTotalPrice}");
+        }
+    }
 }
