@@ -8,14 +8,35 @@ namespace MidtermPOS
 {
     class Cart : Product
     {
-        public Cart(string name, string category, string description, double price) :base(name, category, description, price)
+		
+
+
+        public Cart(string name, string category, string description, double price, int _quantity) : base(name, category, description, price)
         {
+            Quantity = _quantity;
+        }
+        // converts the Cart item to a string
+        public override string ToString()
+        {
+            return base.ToString() + "{Description}";
+        }
+
+        public string ToStringWithQuantity()
+        {
+            return ($"{Name}\t\t\t\t{Quantity}");
 
         }
 
-        public override string ToString()
+
+        // calculates subtotal for each item in cartList, returns a double value.
+        public static double SubTotaler()
         {
-            return base.ToString() + $"{Quantity}";
+            double subTotal = 0;
+            foreach (Product item in cartList)
+            {
+                subTotal += item.Price;
+            }
+            return subTotal;
         }
     }
 }
