@@ -7,6 +7,8 @@ using System.IO;
 
 namespace MidtermPOS
 {
+    
+
     class Product
     {
         public static List<Product> cartList = new List<Product>();
@@ -79,6 +81,11 @@ namespace MidtermPOS
         public override string ToString()
         {
             return ($"{Name}\t\t\t\t${Price}");
+
+        }
+        public string ToStringWithQuantity()
+        {
+            return ($"{Name}\t\t\t\t{Quantity}");
 
         }
 

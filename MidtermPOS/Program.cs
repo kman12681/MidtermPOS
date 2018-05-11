@@ -5,23 +5,33 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MidtermPOS
-
 {
     class Program
     {
+
         static void Main(string[] args)
         {
+            // welcomes the user
             Console.WriteLine("Welcome to the ***");
 
-                        
             ShoppingCart();
+
             //ViewFullMenu(); 
             //ViewSingleMenuItem();
-        }      
-        
+
+
+
+            Console.WriteLine($"The Subtotal is {Cart.SubTotaler()} ");
+            Console.ReadKey();
+        }
+
+
+
         public static int ChooseProduct()
-        { while (true)
+        {
+            while (true)
             {
+                //lists the products on the menu, starting at 1 
                 int menuCount = 0;
                 foreach (Product p in Product.products)
                 {
@@ -39,15 +49,15 @@ namespace MidtermPOS
                     int userpick = Validator.ValidNumAndConvertToWholeNum();
 
                     // if user does not choose 1 or 2, it will bounce back to
-
                     if (userpick < 1 || userpick > Product.products.Count)
+
                     {
                         Console.WriteLine($"Invalid entry. Enter a number between 1 and {Product.products.Count}");
                         continue;
                     }
                     else
                     {
-                        return userpick;                        
+                        return userpick;
                     }
                 }
             }
@@ -59,25 +69,48 @@ namespace MidtermPOS
             {
                 Console.WriteLine(p);
             }
+
+
+
+
+            // Console.WriteLine(Product.products[0].Quantity);
+
         }
 
+        public static void ViewSingleMenuItem()
+        {
+            Console.WriteLine(Product.products[0]);
+        }
+
+        // shopping cart method (1)
         public static void ShoppingCart()
         {
-            
+            //counter for items being added to the cart
+            int itemadded = 0;
+
+            //while loop for shopping, allowing multiple items to be added
             bool shopping = true;
             while (shopping)
             {
-                int menuChoice = ChooseProduct();                
+                int menuChoice = ChooseProduct();
+                menuChoice--;
 
+                //gets users requested quantity of menu item
                 Console.WriteLine("How many would you like?");
-                //TODO: input validation on this
-                int quantity = int.Parse(Console.ReadLine());
-                for (int i = 0; i < quantity; i++)
-                {
-                    Cart.cartList.Add(Product.products[menuChoice - 1]);
-                }
-                Console.WriteLine("Keep shopping?");
-                string response = Console.ReadLine();
+                int quantity = Validator.ValidNumAndConvertToWholeNum();
+
+                //adds item to the cartList and changes quantity
+                Cart.cartList.Add(Product.products[menuChoice]);
+                Cart.cartList[itemadded].Quantity = quantity;
+
+
+                //
+                double linetotal = (Cart.cartList[itemadded].Quantity * Cart.cartList[itemadded].Price);
+                Console.WriteLine(Cart.cartList[itemadded].Name + " | Quantity of " + Cart.cartList[itemadded].Quantity + " x $" + Cart.cartList[itemadded].Price + " = $" + linetotal);
+                itemadded++;
+
+                Console.WriteLine("Keep shopping? (y/n)");
+                string response = Validator.GetAValidYorN();
                 if (response == "y")
                 {
                     continue;
@@ -87,23 +120,29 @@ namespace MidtermPOS
                     shopping = false;
                 }
             }
-
-            Cart.SubTotaler();
-            Console.WriteLine(Cart.SubTotaler());
-
-            
-           // Console.WriteLine(Product.products[0].Quantity);
-
         }
 
-        public static void ViewSingleMenuItem()
+        //calculates salestax
+        public static double SalesTaxCalculator(double input)
         {
-            Console.WriteLine(Product.products[0]);
+            double aftertax = (input * .06) + input;
+            return aftertax;
         }
 
-
-
+        public static bool IsValidMenuChoice(int _input)
+        {
+            _input = Validator.ValidNumAndConvertToWholeNum();
+            if (_input <= 0 && _input > Product.products.Count())
+            {
+                Console.WriteLine("That item does not exist");
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
     }
-}
 
+}
 
