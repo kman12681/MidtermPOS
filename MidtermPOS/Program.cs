@@ -96,12 +96,12 @@ namespace MidtermPOS
                 if (quantity != 0)
                 {
                     //adds item to the cartList and updates the quantity from 0.
-                    Cart.cartList.Add(Product.products[menuChoice]);
-                    Cart.cartList[itemadded].Quantity = quantity;
+                    Product.cartList.Add(Product.products[menuChoice]);
+                    Product.cartList[itemadded].Quantity = quantity;
 
                     ////prints a linetotal
-                    double linetotal = (Cart.cartList[itemadded].Quantity * Cart.cartList[itemadded].Price);
-                    Console.WriteLine(Cart.cartList[itemadded].Name + " | Quantity of " + quantity + " x $" + Cart.cartList[itemadded].Price + " = $" + linetotal);
+                    double linetotal = (Product.cartList[itemadded].Quantity * Product.cartList[itemadded].Price);
+                    Console.WriteLine(Product.cartList[itemadded].Name + " | Quantity of " + quantity + " x $" + Product.cartList[itemadded].Price + " = $" + linetotal);
 
                     // increments the interaction with the shopping cart by 1.
                     itemadded++;
@@ -153,7 +153,7 @@ namespace MidtermPOS
             //declares and initializes cart's total price to 0.
             double cartTotalPrice = 0;
             Console.WriteLine("\nSHOPPING CART");
-            foreach (Product c in Cart.cartList)
+            foreach (Product c in Product.cartList)
             {
                 double groupprice = (c.Quantity * c.Price);
                 Console.WriteLine($"{c.Name}  Qty:{c.Quantity} x ${c.Price} = ${groupprice}");

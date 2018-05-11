@@ -115,5 +115,50 @@ namespace MidtermPOS
             }
             return response;
         }
+
+        public static string ValidPaymentMethod()
+        {
+            //bool AskingForPaymentMethod = true;
+            while (true)
+            {
+                string input = Console.ReadLine();
+
+                if (!(input.ToLower() == "cash") && !(input.ToLower() == "credit") && !(input.ToLower() == "check") && !(input.ToLower() == "gift card"))
+                {
+                    Console.WriteLine("Invalid payment method entered. Please enter either cash, credit, check or gift card.");
+
+
+                    // AskingForPaymentMethod = true;
+
+                }
+                else
+                {
+                    return input;
+                }
+            }
+        }
+
+        //public static double ValidateCreditCard(string paymentMethod)
+        //{
+
+        //    while (true)
+        //    {
+        //        Console.WriteLine("Please enter credit card number");
+        //        //string payment = Console.ReadLine();
+        //        long paymentDouble = ValidNumAndConvertToWholelong();
+
+        //        if (paymentMethod == "credit" && Regex.IsMatch(paymentDouble.ToString(), @"\b(?:3[47]\d|(?:4\d|5[1-5]|65)\d{2}|6011)\d{12}\b"))
+        //        {
+        //            Console.WriteLine("Thank you for entering a credit card number!");
+        //            return paymentDouble;
+
+
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("That was not a valid credit card number");
+        //        }
+        //    }
+        //}
     }
 }
