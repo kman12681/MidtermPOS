@@ -9,6 +9,8 @@ namespace MidtermPOS
 {
     class Product
     {
+        public static List<Product> cartList = new List<Product>();
+
         private string name;
         private string category;
         private string description;
@@ -21,6 +23,7 @@ namespace MidtermPOS
             this.Category = category;
             this.Description = description;
             this.Price = price;
+            this.Quantity = quantity;
         }
 
         public string Name { get => name; set => name = value; }

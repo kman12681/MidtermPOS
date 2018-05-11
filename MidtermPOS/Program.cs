@@ -15,7 +15,8 @@ namespace MidtermPOS
 
                         
             ShoppingCart();
-            //ViewFullMenu();            
+            //ViewFullMenu(); 
+            //ViewSingleMenuItem();
         }      
         
         public static int ChooseProduct()
@@ -58,23 +59,22 @@ namespace MidtermPOS
             {
                 Console.WriteLine(p);
             }
-        }   
-        
+        }
+
         public static void ShoppingCart()
         {
-            List<Product> cart = new List<Product>();
+            
             bool shopping = true;
             while (shopping)
             {
-                int menuChoice = ChooseProduct();
-                menuChoice--;
-                
+                int menuChoice = ChooseProduct();                
+
                 Console.WriteLine("How many would you like?");
                 //TODO: input validation on this
                 int quantity = int.Parse(Console.ReadLine());
                 for (int i = 0; i < quantity; i++)
                 {
-                    cart.Add(Product.products[menuChoice - 1]);
+                    Cart.cartList.Add(Product.products[menuChoice - 1]);
                 }
                 Console.WriteLine("Keep shopping?");
                 string response = Console.ReadLine();
@@ -87,13 +87,22 @@ namespace MidtermPOS
                     shopping = false;
                 }
             }
-            
-            //foreach (Product p in cart)
-            //{
-            //    Console.WriteLine(p);
-            //}            
 
-        }        
+            Cart.SubTotaler();
+            Console.WriteLine(Cart.SubTotaler());
+
+            
+           // Console.WriteLine(Product.products[0].Quantity);
+
+        }
+
+        public static void ViewSingleMenuItem()
+        {
+            Console.WriteLine(Product.products[0]);
+        }
+
+
+
     }
 }
 
