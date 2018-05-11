@@ -23,12 +23,17 @@ namespace MidtermPOS
         {
             while (true)
             {
+                Console.WriteLine($"\n{"ITEM",-8}{"NAME",-29}PRICE");
+                Console.WriteLine("======= ===========================  =====\n");
                 //lists the products on the menu, starting at 1 
                 int menuCount = 0;
                 foreach (Product p in Product.products)
                 {
                     menuCount++;
-                    Console.WriteLine($"{menuCount}\t{p}");
+                    //Tabs would result in unaligned items because the tab would begin based on the length of the characters within it
+                    //Using commas & a num to determine the width of each column will produce the best alignment for columns
+                    //A negative num will align to the left, positive num will align to the right 
+                    Console.WriteLine($"{menuCount,3} --- {p}");
                 }
 
                 bool RuningProgram = true;
@@ -116,7 +121,7 @@ namespace MidtermPOS
                 else
                 {
                     PrintCart();
-                    Console.WriteLine("Would you like to complete your purchase? (y/n)");
+                    Console.WriteLine("\nWould you like to complete your purchase? (y/n)");
                     string completePurchQ = Validator.GetAValidYorN();
 
                     if (completePurchQ != "y")
@@ -157,15 +162,18 @@ namespace MidtermPOS
             //declares and initializes cart's total price to 0.
             double cartTotalPrice = 0;
             Console.WriteLine("\nSHOPPING CART");
+            //Headers for Shopping Cart
+            Console.WriteLine($"\n{"ITEM NAME",-29}{"QTY",-13}TOTAL");
+            Console.WriteLine("============================ ========     =====\n");
             foreach (Product c in Cart.cartList)
             {
                 double groupprice = (c.Quantity * c.Price);
-                Console.WriteLine($"{c.Name}  Qty:{c.Quantity} x ${c.Price} = ${groupprice}");
+                Console.WriteLine($"{c.Name,-25}   {c.Quantity,2} x  ${c.Price,-3} =  ${groupprice,-3}");
                 cartTotalPrice = cartTotalPrice + groupprice;
             }
-            Console.WriteLine($"SUBTOTAL: ${cartTotalPrice}");
-            Console.WriteLine($"TAX: ${cartTotalPrice*.06}");
-            Console.WriteLine($"GRAND TOTAL: ${cartTotalPrice * .06 + cartTotalPrice}");
+            Console.WriteLine($"\n\n{"SUBTOTAL",-15} $ {cartTotalPrice, 0:N2}");
+            Console.WriteLine($"{"TAX",-15} $ {(cartTotalPrice*.06), 0:N2}");
+            Console.WriteLine($"{"GRAND TOTAL",-15} $ {(cartTotalPrice * .06 + cartTotalPrice), 0:N2}");
         }
 
         //requests desired payment method from user
