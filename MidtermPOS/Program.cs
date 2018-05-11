@@ -77,7 +77,7 @@ namespace MidtermPOS
         {
             //counter for items being added to the cart
             int itemadded = 0;
-
+            double linetotal = 0;
             //while loop for shopping, allowing multiple items to be added
             bool shopping = true;
             while (shopping)
@@ -96,7 +96,7 @@ namespace MidtermPOS
                     Product.cartList[itemadded].Quantity = quantity;
 
                     ////prints a linetotal
-                    double linetotal = (Product.cartList[itemadded].Quantity * Product.cartList[itemadded].Price);
+                    linetotal = (Product.cartList[itemadded].Quantity * Product.cartList[itemadded].Price);
                     Console.WriteLine(Product.cartList[itemadded].Name + " | Quantity of " + quantity + " x $" + Product.cartList[itemadded].Price + " = $" + linetotal);
 
                     // increments the interaction with the shopping cart by 1.
@@ -129,9 +129,23 @@ namespace MidtermPOS
                     //TODO:  Payment menu, then a display receipt method
 
                     PaymentMenu();
+                   
+                    //Console.WriteLine(Product.cartList[itemadded].Name + " | Quantity of " + quantity + " x $" + Product.cartList[itemadded].Price + " = $" + linetotal);
 
-                    Console.WriteLine("Thank you for your order!");
-                    shopping = false;
+                    Receipt();
+                    Console.WriteLine("Would you like to place another order?");
+                    string userresponse = Validator.GetAValidYorN();
+                    if (userresponse == "y")
+                    {
+                        continue;
+                    }
+                        else
+                    {
+                        shopping = false;
+                        Console.WriteLine("Thank you!");
+                        Console.ReadKey();
+                    }
+
                 }
             }
         }
@@ -142,7 +156,7 @@ namespace MidtermPOS
             _input = Validator.ValidNumAndConvertToWholeNum();
             if (_input <= 0 && _input > Product.products.Count())
             {
-                Console.WriteLine("That item does not exist");
+                Console.WriteLine("That item does not exist.");
                 return false;
             }
             else
@@ -170,13 +184,15 @@ namespace MidtermPOS
             Console.WriteLine($"GRAND TOTAL: ${grandtotal}");
         }
 
+       public static string userPaymentChoice = "";
+
         //requests desired payment method from user
         public static void PaymentMenu()
         {
             Console.WriteLine("Which method of payment would you like to use for this order?");
             Console.WriteLine("Treat Ya'self by Drones accepts Cash, Check or Credit");
 
-            string userPaymentChoice = Validator.ValidPaymentMethod();
+            userPaymentChoice = Validator.ValidPaymentMethod();
 
             if (userPaymentChoice == "cash")
             {
@@ -190,6 +206,27 @@ namespace MidtermPOS
             {
                 Validator.ValidateCreditCard();
             }
+
+        }
+
+        public static void Receipt()
+        {
+            Console.WriteLine("Order Completed!");
+            //declares and initializes cart's total price to 0.
+            double cartTotalPrice = 0;
+            Console.WriteLine("\nItems Ordered:");
+            foreach (Product c in Product.cartList)
+            {
+                double groupprice = (c.Quantity * c.Price);
+                Console.WriteLine($"{c.Name}  Qty:{c.Quantity} x ${c.Price} = ${groupprice}");
+                cartTotalPrice = cartTotalPrice + groupprice;
+            }
+
+            grandtotal = (cartTotalPrice * .06) + cartTotalPrice;
+            Console.WriteLine($"SUBTOTAL: ${cartTotalPrice}");
+            Console.WriteLine($"TAX: ${cartTotalPrice * .06}");
+            Console.WriteLine($"GRAND TOTAL: ${grandtotal}");
+            Console.WriteLine($"Method of payment used: {userPaymentChoice}");
 
         }
        
