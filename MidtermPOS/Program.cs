@@ -173,8 +173,8 @@ namespace MidtermPOS
         //requests desired payment method from user
         public static void PaymentMenu()
         {
-            Console.WriteLine("Treat Ya'self by Drones accepts Cash, Check or Credit");
             Console.WriteLine("Which method of payment would you like to use for this order?");
+            Console.WriteLine("Treat Ya'self by Drones accepts Cash, Check or Credit");
 
             string userPaymentChoice = Validator.ValidPaymentMethod();
 
