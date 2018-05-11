@@ -120,16 +120,17 @@ namespace MidtermPOS
                 else
                 {
                     PrintCart();
+                    Console.WriteLine("Would you like to complete your purchase? (y/n)");
+                    string completePurchQ = Validator.GetAValidYorN();
+
+                    if (completePurchQ != "y")
+                    {
+                        continue;
+                    }
+                    Console.WriteLine("Goodbye!");
                     shopping = false;
                 }
             }
-        }
-
-        //calculates salestax
-        public static double SalesTaxCalculator(double input)
-        {
-            double aftertax = (input * .06) + input;
-            return aftertax;
         }
 
         public static bool IsValidMenuChoice(int _input)
@@ -158,7 +159,9 @@ namespace MidtermPOS
                 Console.WriteLine($"{c.Name}  Qty:{c.Quantity} x ${c.Price} = ${groupprice}");
                 cartTotalPrice = cartTotalPrice + groupprice;
             }
-            Console.WriteLine($"TOTAL: ${cartTotalPrice}");
+            Console.WriteLine($"SUBTOTAL: ${cartTotalPrice}");
+            Console.WriteLine($"TAX: ${cartTotalPrice*.06}");
+            Console.WriteLine($"GRAND TOTAL: ${cartTotalPrice * .06 + cartTotalPrice}");
         }
     }
 }
