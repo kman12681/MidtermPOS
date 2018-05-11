@@ -71,12 +71,12 @@ namespace MidtermPOS
         {
             Console.WriteLine(Product.products[0]);
         }
-
+        public static int itemadded = 0;
         // shopping cart method (1)
         public static void ShoppingCart()
         {
             //counter for items being added to the cart
-            int itemadded = 0;
+            itemadded = 0;
             double linetotal = 0;
             //while loop for shopping, allowing multiple items to be added
             bool shopping = true;
@@ -107,7 +107,7 @@ namespace MidtermPOS
                     Console.WriteLine("Nothing added to the cart");
                 }
                 //keep shopping yey or ney
-                Console.WriteLine("Keep shopping? (y/n)");
+                Console.WriteLine("Add another item? (y/n)");
                 string response = Validator.GetAValidYorN();
                 if (response == "y")
                 {
@@ -116,20 +116,8 @@ namespace MidtermPOS
                 else
                 {
                     PrintCart();
-                    Console.WriteLine("Would you like to complete your purchase? (y/n)");
-                    string completePurchQ = Validator.GetAValidYorN();
-
-                    if (completePurchQ != "y")
-                    {
-                        Console.WriteLine("Order cancelled.");
-                        continue;
-                    }
 
 
-                    //TODO:  Payment menu, then a display receipt method
-
-                    PaymentMenu();
-                   
                     //Console.WriteLine(Product.cartList[itemadded].Name + " | Quantity of " + quantity + " x $" + Product.cartList[itemadded].Price + " = $" + linetotal);
 
                     Receipt();
@@ -139,13 +127,12 @@ namespace MidtermPOS
                     {
                         continue;
                     }
-                        else
+                    else
                     {
                         shopping = false;
                         Console.WriteLine("Thank you!");
                         Console.ReadKey();
                     }
-
                 }
             }
         }
@@ -168,23 +155,73 @@ namespace MidtermPOS
         //prints the shopping cart contents
         public static void PrintCart()
         {
+            int count = 0;
             //declares and initializes cart's total price to 0.
             double cartTotalPrice = 0;
             Console.WriteLine("\nSHOPPING CART");
             foreach (Product c in Product.cartList)
             {
+                count++;
                 double groupprice = (c.Quantity * c.Price);
-                Console.WriteLine($"{c.Name}  Qty:{c.Quantity} x ${c.Price} = ${groupprice}");
+                Console.WriteLine($"{count}\t{c.Name}  Qty:{c.Quantity} x ${c.Price} = ${groupprice}");
                 cartTotalPrice = cartTotalPrice + groupprice;
             }
 
             grandtotal = (cartTotalPrice * .06) + cartTotalPrice;
             Console.WriteLine($"SUBTOTAL: ${cartTotalPrice}");
-            Console.WriteLine($"TAX: ${cartTotalPrice*.06}");
+            Console.WriteLine($"TAX: ${cartTotalPrice * .06}");
             Console.WriteLine($"GRAND TOTAL: ${grandtotal}");
+
+            Console.WriteLine();
+            Console.Write("Would you like to checkout (checkout), add more items (add), or edit (edit) your cart?: ");
+            string response = Console.ReadLine().ToLower();
+            while (true)
+            {
+                if (response != "checkout" && response != "edit" && response != "add")
+                {
+                    Console.WriteLine("Invalid response. Enter 'checkout', 'add', or 'edit'");
+                    response = Console.ReadLine();
+                    continue;
+                }
+                else if (response == "edit")
+                {
+                    ChangeQuantityInCart();
+                }
+                else if (response == "add")
+                {
+                    AddToCart();
+                }
+                else
+                {
+                    //TODO:  Payment menu, then a display receipt method
+
+                    PaymentMenu();
+                }
+            }
         }
 
-       public static string userPaymentChoice = "";
+        public static void CartContents()
+        {
+            int count = 0;
+            //declares and initializes cart's total price to 0.
+            double cartTotalPrice = 0;
+            Console.WriteLine("\nSHOPPING CART");
+            foreach (Product c in Product.cartList)
+            {
+                count++;
+                double groupprice = (c.Quantity * c.Price);
+                Console.WriteLine($"{count}\t{c.Name}  Qty:{c.Quantity} x ${c.Price} = ${groupprice}");
+                cartTotalPrice = cartTotalPrice + groupprice;
+            }
+
+            grandtotal = (cartTotalPrice * .06) + cartTotalPrice;
+            Console.WriteLine($"SUBTOTAL: ${cartTotalPrice}");
+            Console.WriteLine($"TAX: ${cartTotalPrice * .06}");
+            Console.WriteLine($"GRAND TOTAL: ${grandtotal}");
+
+        }
+
+        public static string userPaymentChoice = "";
 
         //requests desired payment method from user
         public static void PaymentMenu()
@@ -207,6 +244,90 @@ namespace MidtermPOS
                 Validator.ValidateCreditCard();
             }
 
+        }       
+
+        public static void ChangeQuantityInCart()
+        {
+            CartContents();
+            Console.Write("Which item would you like to edit: ");
+
+            bool RuningProgram = true;
+            while (RuningProgram)
+            {
+                int userpick = Validator.ValidNumAndConvertToWholeNum();
+
+                // if user does not choose 1 or 2, it will bounce back to
+                if (userpick < 1 || userpick > Product.cartList.Count)
+
+                {
+                    Console.WriteLine($"Invalid entry. Enter a number between 1 and {Product.cartList.Count}");
+                    continue;
+                }
+                else
+                {
+                    userpick--;
+                    Console.Write("How many would you like?: ");
+                    int quantity = Validator.ValidNumAndConvertToWholeNum();
+
+                    if (quantity == 0)
+                    {
+                        Product.cartList.Remove(Product.cartList[userpick]);
+                        Console.WriteLine("Item removed from cart.");
+                        RuningProgram = false;
+
+                    }
+                    else
+                    {
+                        // Product.cartList.Remove(Product.products[index]);
+                        // Product.cartList.Add(Product.products[index]);
+                        Product.cartList[userpick].Quantity = quantity;
+
+                        ////prints a linetotal
+                        double linetotal = (Product.cartList[userpick].Quantity * Product.cartList[userpick].Price);
+                        Console.WriteLine(Product.cartList[userpick].Name + " | Quantity of " + quantity + " x $" + Product.cartList[userpick].Price + " = $" + linetotal);
+
+                        // increments the interaction with the shopping cart by 1.
+                        //itemadded++;
+                        RuningProgram = false;
+                    }
+                    PrintCart();
+                }
+            }
+        }
+
+        public static void AddToCart()
+        {
+
+            bool shopping = true;
+            while (shopping)
+            {
+                int userpick = ChooseProduct();
+                // if user does not choose 1 or 2, it will bounce back to
+                if (userpick < 1 || userpick > Product.products.Count)
+
+                {
+                    Console.WriteLine($"Invalid entry. Enter a number between 1 and {Product.cartList.Count}");
+                    continue;
+                }
+                else
+                {
+                    userpick--;
+                    //gets users requested quantity of menu item
+                    Console.WriteLine("How many would you like?");
+                    int quantity = Validator.ValidNumAndConvertToWholeNum();
+
+                    if (quantity != 0) // can I edit?
+                    {
+                        //adds item to the cartList and updates the quantity from 0.
+                        Product.cartList.Add(Product.products[userpick]);
+                        Product.cartList[itemadded].Quantity = quantity;
+                        shopping = false;
+
+                    }
+                }
+
+                PrintCart();
+            }
         }
 
         public static void Receipt()
@@ -229,7 +350,7 @@ namespace MidtermPOS
             Console.WriteLine($"Method of payment used: {userPaymentChoice}");
 
         }
-       
+
 
 
 
