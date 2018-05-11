@@ -92,14 +92,13 @@ namespace MidtermPOS
 
                 if (Program.grandtotal > convertNum)
                 {
-                    Console.WriteLine($"You entered ${convertNum}.  The grand total is {Program.grandtotal}");
-                    Console.WriteLine("Please );
+                    Console.WriteLine($"You entered ${convertNum} while the grand total is ${Program.grandtotal}");
                     continue;
                 }
                 else
                 {
-                    double changeGiven = (Program.grandtotal - convertNum);
-                    Console.WriteLine($"Your change is {convertNum}");
+                    double changeGiven = (convertNum - Program.grandtotal);
+                    Console.WriteLine($"Your change is {changeGiven}");
                     verifying = false;
                 }
 
