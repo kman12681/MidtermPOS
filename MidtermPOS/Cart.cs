@@ -7,10 +7,7 @@ using System.Threading.Tasks;
 namespace MidtermPOS
 {
     class Cart : Product
-    {
-
-
-
+    { 
         public Cart(string name, string category, string description, double price, int _quantity) : base(name, category, description, price)
         {
             Quantity = _quantity;
@@ -19,6 +16,7 @@ namespace MidtermPOS
         public override string ToString()
         {
             return base.ToString() + "{Description}";
+
         }
 
         //public string ToStringWithQuantity()
