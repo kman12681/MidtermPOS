@@ -129,7 +129,7 @@ namespace MidtermPOS
             return response;
         }
 
-        // takes user input, prompts for a valid payment method until one is chosen, returns payment method.
+        // takes user input, prampts for a valid payment method until one is chosen, returns payment method.
         public static string ValidPaymentMethod()
         {
             while (true)

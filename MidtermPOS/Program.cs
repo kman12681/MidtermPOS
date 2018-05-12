@@ -8,36 +8,22 @@ namespace MidtermPOS
 {/* POS
 includes a class, with name, category, description, massage - DONE
 includes a minimum of 12 items, which are stored in a text files - DONE
-
-(type :pick menu checkout to checkout, 
-exit to exit the program, -- TODO: !**************************
-
-
 include validation on if cart is empty - DONE
-
-presents user with a menu, allows them to choose by a number
+presents user with a menu, allows them to choose by a number - DONE
 user is then prompted to choose a quantity - DONE
-
 line total (price * quantity =) is provided - DONE
-
 keep shopping or checkout? (y/n) - DONE
-
-if checkout,
-give subtotal, tax and grandtotal of all items - DONE
-
+if checkout, give subtotal, tax and grandtotal of all items - DONE
 ask for payment type - DONE
-
 if cash, validate amount tendered - DONE
 if check, check the check number - DONE
 if credit, validate the expiration and CVV - DONE
-
 display a receipt with all items ordered, subtotal, tax, grand total - DONE
-if cash, show change
+if cash, show change - DONE
 if check, show check accepted - DONE
 if credit, show credit card accepted - DONE
+asks for another order - DONE */
 
-ask if they would like to return to the menu for a new order, or exit
-*/
     public static class Program
     {
         static void Main(string[] args)
@@ -125,10 +111,10 @@ ask if they would like to return to the menu for a new order, or exit
                 Console.WriteLine("Would you like to complete your order (y/n)");
                 string completePurchQ = Validator.GetAValidYorN().ToLower();
 
-                if (completePurchQ != "y")
+                if (completePurchQ == "n")
                 {
                     Console.WriteLine("Order cancelled.");
-                    continue;
+                    completingorder = false;
                 }
                 else
                 {
