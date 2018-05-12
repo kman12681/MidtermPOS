@@ -82,7 +82,7 @@ namespace MidtermPOS
             bool verifying = true;
             while (verifying)
             {
-                Console.WriteLine("Please enter a valid amount of cash that will be paid.  (Dollars only, change is not accepted)");
+                Console.WriteLine("Please enter a valid amount of cash that will be paid.  (Dollars only, coins are not accepted)");
                 string _input = Console.ReadLine();
                 bool validNum = int.TryParse(_input, out convertNum);
 
@@ -94,13 +94,14 @@ namespace MidtermPOS
 
                 if (Program.grandtotal > convertNum)
                 {
-                    Console.WriteLine($"You entered ${convertNum} while the grand total is ${Program.grandtotal}");
+                    Console.WriteLine($"\nYou entered ${convertNum} while the grand total is ${Program.grandtotal}");
                     continue;
                 }
                 else
                 {
                     double changeGiven = (convertNum - Program.grandtotal);
-                    Console.WriteLine($"Your change is {changeGiven}");
+                    //changeGiven now only 2 decimal places
+                    Console.WriteLine($"Your change is ${changeGiven, 0:F2}");
                     verifying = false;
                 }
 
@@ -115,7 +116,7 @@ namespace MidtermPOS
             while (askingYorN)
             {
 
-                response = Console.ReadLine();
+                response = Console.ReadLine().ToLower();
                 if (response != "y" && response != "n")
                 {
                     Console.WriteLine("Invalid response.");

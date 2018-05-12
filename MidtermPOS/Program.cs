@@ -11,7 +11,7 @@ namespace MidtermPOS
         static void Main(string[] args)
         {
             // welcomes the user
-            Console.WriteLine("Welcome to Treat Ya'self by Drones");
+            Console.WriteLine("Welcome to TREAT Ya'SELF by Drones");
 
             //runs the shoppingcart method
             ShoppingCart();
@@ -113,7 +113,8 @@ namespace MidtermPOS
                 }
                 //keep shopping yey or ney
                 Console.WriteLine("Keep shopping? (y/n)");
-                string response = Validator.GetAValidYorN();
+                //convert string .ToLower
+                string response = Validator.GetAValidYorN().ToLower();
                 if (response == "y")
                 {
                     continue;
@@ -122,7 +123,8 @@ namespace MidtermPOS
                 {
                     PrintCart();
                     Console.WriteLine("\nWould you like to complete your purchase? (y/n)");
-                    string completePurchQ = Validator.GetAValidYorN();
+                    //convert string .ToLower
+                    string completePurchQ = Validator.GetAValidYorN().ToLower();
 
                     if (completePurchQ != "y")
                     {
@@ -138,8 +140,9 @@ namespace MidtermPOS
                     //Console.WriteLine(Product.cartList[itemadded].Name + " | Quantity of " + quantity + " x $" + Product.cartList[itemadded].Price + " = $" + linetotal);
 
                     Receipt();
-                    Console.WriteLine("Would you like to place another order?");
-                    string userresponse = Validator.GetAValidYorN();
+                    Console.WriteLine("\nWould you like to place another order?");
+                    //convert string .ToLower
+                    string userresponse = Validator.GetAValidYorN().ToLower();
                     if (userresponse == "y")
                     {
                         continue;
@@ -147,7 +150,8 @@ namespace MidtermPOS
                         else
                     {
                         shopping = false;
-                        Console.WriteLine("Thank you!");
+                        Console.WriteLine("\nThank you for shopping with TREAT Ya'SELF by Drones!");
+                        Console.WriteLine("Press enter to exit...");
                         Console.ReadKey();
                     }
 
@@ -175,25 +179,25 @@ namespace MidtermPOS
         {
             //declares and initializes cart's total price to 0.
             double cartTotalPrice = 0;
-            Console.WriteLine("\nSHOPPING CART");
+            Console.WriteLine("\nSHOPPING CART:");
 
             //Headers for Shopping Cart
-            Console.WriteLine($"\n{"ITEM NAME",-29}{"QTY",-13}TOTAL");
-            Console.WriteLine("============================ ========     =====\n");
+            Console.WriteLine($"\n{"NAME",-28}{"QTY",-19}{"TOTAL", -7}");
+            Console.WriteLine("=========================   =============      ======\n");
 
             foreach (Product c in Product.cartList)
 
             {
                 double groupprice = (c.Quantity * c.Price);
-                Console.WriteLine($"{c.Name,-25}   {c.Quantity,2} x  ${c.Price,-3} =  ${groupprice,-3}");
+                Console.WriteLine($"{c.Name,-25}   {c.Quantity,-4}   x  ${c.Price,-4} =  ${groupprice,-4}");
                 cartTotalPrice = cartTotalPrice + groupprice;
             }
 
 
             grandtotal = (cartTotalPrice * .06) + cartTotalPrice;
-            Console.WriteLine($"\n\n{"SUBTOTAL",-15} $ {cartTotalPrice, 5:F2}");
-            Console.WriteLine($"{"TAX",-15} $ {(cartTotalPrice*.06), 5:F2}");
-            Console.WriteLine($"{"GRAND TOTAL",-15} $ {grandtotal, 5:F2}");
+            Console.WriteLine($"\n\n{"SUBTOTAL",-15} $ {cartTotalPrice, 10:F2}");
+            Console.WriteLine($"{"TAX",-15} $ {(cartTotalPrice*.06), 10:F2}");
+            Console.WriteLine($"{"GRAND TOTAL",-15} $ {grandtotal, 10:F2}");
 
         }
 
@@ -202,8 +206,8 @@ namespace MidtermPOS
         //requests desired payment method from user
         public static void PaymentMenu()
         {
-            Console.WriteLine("Which method of payment would you like to use for this order?");
-            Console.WriteLine("Treat Ya'self by Drones accepts Cash, Check or Credit");
+            Console.WriteLine("\nWhich method of payment would you like to use for this order?");
+            Console.WriteLine("TREAT Ya'SELF by Drones accepts Cash, Check or Credit");
 
             userPaymentChoice = Validator.ValidPaymentMethod();
 
@@ -224,22 +228,26 @@ namespace MidtermPOS
 
         public static void Receipt()
         {
-            Console.WriteLine("Order Completed!");
+            Console.WriteLine("ORDER COMPLETED!\n");
+            Console.WriteLine("*******************************************************");
+            Console.WriteLine("*******************************************************");
             //declares and initializes cart's total price to 0.
             double cartTotalPrice = 0;
-            Console.WriteLine("\nItems Ordered:");
+            Console.WriteLine("\n\nITEMS ORDERED\n");
+            Console.WriteLine($"{"NAME",-28}{"QTY",-19}{"TOTAL",-7}");
+            Console.WriteLine("=========================   =============      ======\n");
             foreach (Product c in Product.cartList)
             {
                 double groupprice = (c.Quantity * c.Price);
-                Console.WriteLine($"{c.Name}  Qty:{c.Quantity} x ${c.Price} = ${groupprice}");
+                Console.WriteLine($"{c.Name,-25}   {c.Quantity,-4}   x  ${c.Price,-4} =  ${groupprice,-4}");
                 cartTotalPrice = cartTotalPrice + groupprice;
             }
 
             grandtotal = (cartTotalPrice * .06) + cartTotalPrice;
-            Console.WriteLine($"SUBTOTAL: ${cartTotalPrice}");
-            Console.WriteLine($"TAX: ${cartTotalPrice * .06}");
-            Console.WriteLine($"GRAND TOTAL: ${grandtotal}");
-            Console.WriteLine($"Method of payment used: {userPaymentChoice}");
+            Console.WriteLine($"\n\n{"SUBTOTAL",-20} $ {cartTotalPrice, 10:F2}");
+            Console.WriteLine($"{"TAX",-20} $ {(cartTotalPrice * .06), 10:F2}");
+            Console.WriteLine($"{"GRAND TOTAL", -20} $ {grandtotal, 10:F2}");
+            Console.WriteLine($"\n\nMethod of payment used: {userPaymentChoice}");
 
         }
        
