@@ -137,7 +137,7 @@ asks for another order - DONE */
             }
             else
             {
-                Console.WriteLine("Thank you!");
+                Console.WriteLine("Thank you for ordering from Treat Yo'self!");
                 Console.ReadKey();
                 return false;
             }
@@ -297,8 +297,17 @@ asks for another order - DONE */
             Console.WriteLine($"{"TAX",-20} $ {(cartTotalPrice * .06),10:F2}");
             Console.WriteLine($"{"GRAND TOTAL",-20} $ {grandtotal,10:F2}");
             Console.WriteLine($"{"METHOD OF PAYMENT",-20}   {userPaymentChoice,10:F2}");
-            Console.WriteLine($"{"YOUR PAYMENT",-20} $ {Validator.cashpaid,10:F2}");
-            Console.WriteLine($"{"YOUR CHANGE",-20} $ {changeGiven,10:F2}");
+            if (userPaymentChoice == "cash")
+            {
+                Console.WriteLine($"{"YOUR PAYMENT",-20} $ {Validator.cashpaid,10:F2}");
+                Console.WriteLine($"{"YOUR CHANGE",-20} $ {changeGiven,10:F2}");
+            }
+            else
+            {
+                Console.WriteLine($"{"PAYMENT SUBMITTED FOR APPROVAL",-20}");
+            }
+
+
         }
 
 

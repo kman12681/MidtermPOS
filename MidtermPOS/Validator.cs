@@ -197,14 +197,8 @@ namespace MidtermPOS
                 DateTime expDate;
                 string format = "MM/yy";
 
-                if (DateTime.TryParseExact(_i, format, CultureInfo.InvariantCulture,
-            DateTimeStyles.None, out expDate))
-                {
-                    Console.WriteLine(DateTime.Today.ToString());
-                    Console.WriteLine(expDate.ToString());
-                }
-                else
-                { }
+                DateTime.TryParseExact(_i, format, CultureInfo.InvariantCulture,
+            DateTimeStyles.None, out expDate);
 
                 int result = DateTime.Compare(expDate, DateTime.Today);
                 if (result < 0)
@@ -215,7 +209,6 @@ namespace MidtermPOS
                 }
                 else
                 {
-                    Console.WriteLine("Thank you for entering a valid expiration date!");
                     AskForExpDate = false;
                 }
             }
