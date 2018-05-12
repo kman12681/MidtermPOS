@@ -7,10 +7,11 @@ using System.IO;
 
 namespace MidtermPOS
 {
-    
+
 
     class Product
     {
+
         public static List<Product> cartList = new List<Product>();
 
         private string name;
@@ -58,6 +59,7 @@ namespace MidtermPOS
                         string description = tokens[2];
                         double price = double.Parse(tokens[3]);
 
+
                         Product p = new Product(name, category, description, price);
                         products.Add(p);
                     }
@@ -78,16 +80,19 @@ namespace MidtermPOS
             }
         }
 
+
+
         public override string ToString()
         {
-            return ($"{Name}\t\t\t\t${Price}");
 
+            return ($"{Name,-25}    ${Price,3}");
         }
         public string ToStringWithQuantity()
         {
-            return ($"{Name}\t\t\t\t{Quantity}");
+            return ($"{Name,-25}    #{Quantity,3}");
 
         }
+
 
     }
 }
