@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,11 +45,26 @@ ask if they would like to return to the menu for a new order, or exit
         {
             // welcomes the user
             Console.WriteLine("Welcome to Treat Ya'self by Drones");
-
+           //AddToProductList();
             //runs the shoppingcart method
-            ShoppingCart();
+            ShoppingCart();            
 
         }
+
+        //private static void AddToProductList()
+        //{
+        //    string name = "shampoo";
+        //    string category = "item";
+        //    string description = "cleans your hair";
+        //    int price = 10;
+
+        //    using (FileStream fs = new FileStream("Product List.txt", FileMode.Append, FileAccess.Write))
+        //    using (StreamWriter sw = new StreamWriter(fs))
+        //    {
+
+        //        sw.WriteLine($"\n{name}\t{category}\t{description}\t{price}\t");
+        //    }
+        //}
 
         // shopping cart method (1)
         public static void ShoppingCart()
@@ -313,8 +329,21 @@ ask if they would like to return to the menu for a new order, or exit
             Console.WriteLine($"{"METHOD OF PAYMENT",-20}   {userPaymentChoice,10:F2}");
             Console.WriteLine($"{"YOUR PAYMENT",-20} $ {Validator.cashpaid,10:F2}");
             Console.WriteLine($"{"YOUR CHANGE",-20} $ {changeGiven,10:F2}");
-        }
+        } 
+        
+        //private static void AddToProductList()
+        //{
+        //    string name = "shampoo";
+        //    string category = "item";
+        //    string description = "cleans your hair";
+        //    int price = 10;
 
+        //    using (FileStream fs = new FileStream("Product List.txt", FileMode.Append, FileAccess.Write))
+        //    using (StreamWriter sw = new StreamWriter(fs))            {            
+
+        //        sw.WriteLine($"\n{name}\t{category}\t{description}\t{price}\t");
+        //    }
+        //}
 
     }
 }
