@@ -94,8 +94,10 @@ asks for another order - DONE */
                     else
                     {
                         CompleteOrder();
+                        itemadded = 0;
                     }
                     placingorder = false;
+
                     shopping = AskToOrderAgainQ();
                 }
  
@@ -114,6 +116,7 @@ asks for another order - DONE */
                 if (completePurchQ == "n")
                 {
                     Console.WriteLine("Order cancelled.");
+                    Product.cartList.Clear();
                     completingorder = false;
                 }
                 else
