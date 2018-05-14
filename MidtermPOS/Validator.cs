@@ -24,7 +24,9 @@ namespace MidtermPOS
                     continue;
                 }
                 else
-                { verifying = false; }
+                {
+                    verifying = false;
+                }
 
             }
             return convertNum;
@@ -46,7 +48,9 @@ namespace MidtermPOS
                     continue;
                 }
                 else
-                { verifying = false; }
+                {
+                    verifying = false;
+                }
 
             }
             return convertNum;
@@ -69,7 +73,9 @@ namespace MidtermPOS
                     continue;
                 }
                 else
-                { verifying = false; }
+                {
+                    verifying = false;
+                }
 
             }
             return convertNum;
@@ -83,10 +89,9 @@ namespace MidtermPOS
             while (verifyingCheckNumn)
             {
                 Console.WriteLine();
-                Console.WriteLine("Your Account and Routing number are already stored in our system.");
-                Console.WriteLine("Please locate and enter the 3 digit check number being used for this order.");
+                Console.WriteLine(">> Please locate and enter the 4 digit check number being used for this order: ");
                 string _input = Console.ReadLine();
-                Match match = Regex.Match(_input,"^[0-9]{3}$");
+                Match match = Regex.Match(_input, "^[0-9]{4}$");
                 bool validNum = int.TryParse(_input, out validnum);
                 if (!match.Success || validNum != true)
                 {
@@ -143,7 +148,7 @@ namespace MidtermPOS
         public static string GetAValidYorN()
         {
             bool askingYorN = true;
-            string response="";
+            string response = "";
             while (askingYorN)
             {
 
@@ -155,8 +160,11 @@ namespace MidtermPOS
                     Console.WriteLine(">> Please enter (y/n):");
                     continue;
                 }
-                else { askingYorN = false; }
-                
+                else
+                {
+                    askingYorN = false;
+                }
+
             }
             return response;
         }
@@ -168,11 +176,10 @@ namespace MidtermPOS
             {
                 string input = Console.ReadLine().ToLower();
 
-                if (!(input == "cash") && !(input == "credit") && !(input == "check") && !(input == "gift card"))
+                if (!(input == "cash") && !(input == "credit") && !(input == "check"))
                 {
                     Console.WriteLine();
                     Console.WriteLine(">> Invalid payment method entered. Please enter either cash, check or credit:");
-
                 }
                 else
                 {
@@ -222,7 +229,6 @@ namespace MidtermPOS
                         Console.WriteLine("You've entered an invalid credit card number");
                         continue;
                     }
-
                 }
             }
             bool AskForExpDate = true;
@@ -266,17 +272,14 @@ namespace MidtermPOS
                     Console.WriteLine(">> Invalid CVV number entered, please enter a valid 3 digit CVV:");
                     continue;
                 }
-
                 else
                 {
                     if (Regex.IsMatch(convertNum.ToString(), "^([0-9]){3}$"))
-
                     {
                         Console.WriteLine();
                         Console.WriteLine("Thank you for entering a valid CVV number!");
                         AskForCVV = false;
                     }
-
                     // (valid doubles entered at input and valid CC format, per regex)
                     else
                     {
@@ -284,11 +287,61 @@ namespace MidtermPOS
                         Console.WriteLine("You've entered an invalid CVV number.");
                         continue;
                     }
-
                 }
             }
-        }      
+        }
+        //Method for verifying a valid routing number for checking account
+        //Converts string input to an int, regex for 9 digit routing number format.  Will return a valid routing number.
+        public static int ValidRoutingNumber()
+        {
+            int validRouteNum = 0;
+            bool verifyingRouteNum = true;
+            while (verifyingRouteNum)
+            {
+                Console.WriteLine("\nPlease enter your 9 digit Routing Number.");
+                string routenum = Console.ReadLine();
+                Match matchroute = Regex.Match(routenum, "^[0-9]{9}$");
+                bool validRouteNum1 = int.TryParse(routenum, out validRouteNum);
+                if (!matchroute.Success || validRouteNum1 != true)
+                {
+                    Console.WriteLine("Invalid Routing Number!");
+                }
+                else
+                {
+                    Console.WriteLine("Valid Routing Number!");
+                    verifyingRouteNum = false;
+                }
+            }
+            return validRouteNum;
+        }
 
-       
+        //Method for verifying a valid checking account number
+        //Converts string input to an int, regex for 8 digit checking account number format.  Will return a valid checking account number.
+        public static int ValidChkAcctNumber()
+        {
+            int validChkAcctNum = 0;
+            bool verifyingChkAcctNum = true;
+            while (verifyingChkAcctNum)
+            {
+                Console.WriteLine("\nChecking Account information is required inorder to process check payment.");
+                Console.WriteLine("Please enter your 8 digit Checking Account Number.");
+                string chkacctnum = Console.ReadLine();
+                Match matchchkacct = Regex.Match(chkacctnum, "^[0-9]{8}$");
+                bool validChkAcctNum1 = int.TryParse(chkacctnum, out validChkAcctNum);
+                if (!matchchkacct.Success || validChkAcctNum1 != true)
+                {
+                    Console.WriteLine("Invalid Checking Account number!");
+                }
+                else
+                {
+                    Console.WriteLine("Valid Checking Account Number!");
+                    verifyingChkAcctNum = false;
+                }
+
+            }
+            return validChkAcctNum;
+        }
     }
 }
+
+
