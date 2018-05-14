@@ -334,7 +334,7 @@ asks for another order - DONE */
                     }
                     if (qtyPick == 0)
                     {
-                        Product.cartList.RemoveAt(userpick);
+                        Product.cartList.RemoveAt(userpick-1);
                         Console.WriteLine();
                         Console.WriteLine("Cart item removed!");
                         PrintMenu();
