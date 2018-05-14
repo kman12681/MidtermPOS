@@ -37,17 +37,16 @@ asks for another order - DONE */
             ShoppingCart();
 
         }
-
-        // shopping cart method (1)
+        // shopping cart method
         public static void ShoppingCart()
         {
 
             bool shopping = true;
             //while loop for shopping, allowing multiple items to be added
             while (shopping)
-            {           
+            {
                 //counter for items being added to the cart
-                int itemadded = 0;
+                //iitemadded = Product.cartList.Count();
                 double linetotal = 0;
 
                 //while loop for placing an order
@@ -71,34 +70,41 @@ asks for another order - DONE */
                     {
 
                         menuChoice--;
-                        Console.WriteLine("How many would you like?");
+                        ViewSingleMenuItem(menuChoice);
+                        Console.WriteLine(">> How many would you like?");
+                        Console.WriteLine();      
                         int quantity = Validator.ValidNumAndConvertToWholeNum();
 
 
                         // if the quantity to be added isn't 0 and the cart contains the item chosen:
                         if (quantity != 0 && Product.cartList.Contains(Product.products[menuChoice]))
                         {
+                            Console.WriteLine();
                             Console.WriteLine("This item already exist in the shopping cart.");
                             int itemIndexInCart = Product.cartList.IndexOf(Product.products[menuChoice]);
                             Product.cartList[itemIndexInCart].Quantity += quantity;
                             ////prints a linetotal
                             linetotal = (Product.cartList[itemIndexInCart].Quantity * Product.cartList[itemIndexInCart].Price);
+                            Console.WriteLine();
                             Console.WriteLine(Product.cartList[itemIndexInCart].Name + " | Quantity updated to: " + Product.cartList[itemIndexInCart].Quantity + " x $" + Product.cartList[itemIndexInCart].Price + " = $"+linetotal );
                         }
 
                         else if (quantity != 0 && !Product.cartList.Contains(Product.products[menuChoice]))
                         {
                             Product.cartList.Add(Product.products[menuChoice]);
-                            Product.cartList[itemadded].Quantity = quantity;
+                            int newItemIndex = Product.cartList.IndexOf(Product.products[menuChoice]);
+                            Product.cartList[newItemIndex].Quantity = quantity;
                             ////prints a linetotal
-                            linetotal = (Product.cartList[itemadded].Quantity * Product.cartList[itemadded].Price);
-                            Console.WriteLine(Product.cartList[itemadded].Name + " | Quantity of " + quantity + " x $" + Product.cartList[itemadded].Price + " = $" + linetotal + "\t*ADDED TO CART*");
+                            linetotal = (Product.cartList[newItemIndex].Quantity * Product.cartList[newItemIndex].Price);
+                            Console.WriteLine();
+                            Console.WriteLine(Product.cartList[newItemIndex].Name + " | Quantity of " + quantity + " x $" + Product.cartList[newItemIndex].Price + " = $" + linetotal + "\t*ADDED TO CART*");
 
                             // increments the interaction with the shopping cart by 1.
-                            itemadded++;
+                            //itemadded++;  -- may not be needed anymore?
                         }
                         else
                         {
+                            Console.WriteLine();
                             Console.WriteLine("Nothing added to the cart");
                         }
                         continue;
@@ -113,23 +119,41 @@ asks for another order - DONE */
 
         public static bool CheckOut()
         {
-            CompleteOrder();
-            return AskToOrderAgainQ();
+            bool gobackorleave = CompleteOrder(); // this is now a bool, if order
+
+            if (gobackorleave)
+            {
+                return AskToOrderAgainQ();
+            }
+            else
+            {
+                return true;
+            }
+
         }
 
-        public static void CompleteOrder()
+        public static bool CompleteOrder()
         {
+            bool orderComplete = true;
             PrintCart();
             bool completingorder = true;
             while (completingorder)
             {
-                Console.WriteLine("Would you like to complete or cancel the order?\nType \"complete\" to complete or \"cancel\" to cancel.");
+                Console.WriteLine(">> Would you like to complete, edit or cancel the order?\nType \"complete\" to complete, \"menu\" to return to the menu or \"cancel\" to cancel.");
                 string completePurchQ = Console.ReadLine();
                 if (completePurchQ == "cancel")
                 {
+                    Console.WriteLine();
                     Console.WriteLine("Order cancelled.");
                     Product.cartList.Clear();
                     completingorder = false;
+                    orderComplete = false;
+                }
+
+                else if (completePurchQ == "menu")
+                {
+                    completingorder = false;
+                    orderComplete = false;
                 }
 
                 else if (completePurchQ == "complete")
@@ -138,19 +162,25 @@ asks for another order - DONE */
                     Receipt();
                     Product.cartList.Clear();
                     completingorder = false;
+                    orderComplete = true;
                 }
+
                 else
                 {
+                    Console.WriteLine();
                     Console.WriteLine("Invalid response.");
                     continue;
                 }
+              
             }
+            return orderComplete;
         }
 
         // prompts user for a response re placing another order, last method of main arg.
         public static bool AskToOrderAgainQ()
         {
-            Console.WriteLine("Would you like to place another order? (y/n)");
+            Console.WriteLine();
+            Console.WriteLine(">> Would you like to place another order? (y/n)");
             string userresponse = Validator.GetAValidYorN();
             if (userresponse == "y")
             {
@@ -158,6 +188,7 @@ asks for another order - DONE */
             }
             else
             {
+                Console.WriteLine();
                 Console.WriteLine("Thank you for ordering from Treat Yo'self!");
                 Console.ReadKey();
                 return false;
@@ -191,7 +222,7 @@ asks for another order - DONE */
                 {
                     //prompts user to purchase a service or item.
                     Console.WriteLine();
-                    Console.WriteLine("Type \"add\" to add to the cart, \"edit\" to edit items in the cart, \"checkout\" to checkout or \"exit\" to exit.");
+                    Console.WriteLine(">> Type \"add\" to add to the cart, \"edit\" to view and edit items in the cart, \"checkout\" to checkout or \"exit\" to exit.");
                     string userresponse = Console.ReadLine().ToLower();
 
                     if (userresponse == "exit")
@@ -201,6 +232,7 @@ asks for another order - DONE */
                     }
                     else if (userresponse == "checkout" && Product.cartList.Count == 0)
                     {
+                        Console.WriteLine();
                         Console.WriteLine("Cannot checkout, the cart is empty!");
                         continue;
                     }
@@ -211,6 +243,7 @@ asks for another order - DONE */
                     }
                     else if (userresponse == "edit" && Product.cartList.Count == 0)
                     {
+                        Console.WriteLine();
                         Console.WriteLine("Cannot edit cart items, the cart is empty!");
                         continue;
                     }
@@ -223,12 +256,13 @@ asks for another order - DONE */
                         bool addingToCart = true;
                         while (addingToCart)
                         {
-                            Console.WriteLine("Enter a menu item number to be added to the cart");
+                            Console.WriteLine();
+                            Console.WriteLine(">> Enter a menu item number to be added to the cart");
                             int userpick = Validator.ValidNumAndConvertToWholeNum();
                             // if user does not choose a valid cart item
                             if (userpick < 1 || userpick > Product.products.Count)
                             {
-                                Console.WriteLine($"Invalid entry. Enter a number between 1 and {Product.products.Count}");
+                                Console.WriteLine($">> Invalid entry. Enter a number between 1 and {Product.products.Count}");
                                 continue;
                             }
                             else
@@ -239,6 +273,7 @@ asks for another order - DONE */
                     }
                     else
                     {
+                        Console.WriteLine();
                         Console.WriteLine("Invalid choice");
                         continue;
                     }
@@ -254,36 +289,58 @@ asks for another order - DONE */
             while (editingCart)
             {
                 int qtyPick;
-                Console.WriteLine("Enter a cart item number to be edited");
-                int userpick = Validator.ValidNumAndConvertToWholeNum();
-                // if user does not choose a valid cart item
-                if (userpick < 1 || userpick > Product.cartList.Count)
+                int userpick = 0;
+                Console.WriteLine();
+                Console.WriteLine($">> Enter a cart item number up to {Product.cartList.Count} to be edited or type \"menu\" to return to the menu.");
+                string userresponse = Console.ReadLine().ToLower();
+                int.TryParse(userresponse, out userpick);
+
+                if (userresponse != "menu" && userpick > Product.cartList.Count && userpick < 1)
                 {
-                    Console.WriteLine($"Invalid entry. Enter a number between 1 and {Product.cartList.Count}");
                     continue;
                 }
-                else
-                {
-                    Console.WriteLine("Enter a new quantity for this item");
-                    userpick--;
-                    qtyPick = Validator.ValidNumAndConvertToWholeNum();
-                }
 
-                if (qtyPick == 0)
+                else if (userresponse == "menu")
                 {
-                    Product.cartList.RemoveAt(userpick);
-                    Console.WriteLine("Cart item removed!");
+                    editingCart = false;
                 }
                 else
                 {
-                    Product.cartList[userpick].Quantity = qtyPick;
+                    // if user does not choose a valid cart item
+                    if (userpick < 1 || userpick > Product.cartList.Count)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine($"Invalid input.");
+                        continue;
+                    }
+                    else
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine(">> Enter a new quantity for this item");
+                        qtyPick = Validator.ValidNumAndConvertToWholeNum();
+                        double linetotal = (Product.cartList[userpick-1].Quantity * Product.cartList[userpick-1].Price);
+                        Console.WriteLine(Product.cartList[userpick-1].Name + " | Quantity updated to: " + qtyPick+ " x $" + Product.cartList[userpick-1].Price + " = $" + linetotal);
+
+                        userpick--;
+
+                    }
+
+                    if (qtyPick == 0)
+                    {
+                        Product.cartList.RemoveAt(userpick);
+                        Console.WriteLine();
+                        Console.WriteLine("Cart item removed!");
+                        //itemadded--; may not be needed
+
+                    }
+                    else
+                    {
+                        Product.cartList[userpick].Quantity = qtyPick;
+                    }
+                    editingCart = false;
                 }
-                editingCart = false;
             }
-
-
         }
-
         // view entire products menu
         public static void ViewFullMenu()
         {
@@ -295,9 +352,9 @@ asks for another order - DONE */
         }
 
         // view a specific menu item
-        public static void ViewSingleMenuItem()
+        public static void ViewSingleMenuItem(int choice)
         {
-            Console.WriteLine(Product.products[0]);
+            Console.WriteLine(Product.products[choice]);
         }
 
         
@@ -308,6 +365,7 @@ asks for another order - DONE */
             _input = Validator.ValidNumAndConvertToWholeNum();
             if (_input <= 0 && _input > Product.products.Count())
             {
+                Console.WriteLine();
                 Console.WriteLine("That item does not exist.");
                 return false;
             }
@@ -354,8 +412,10 @@ asks for another order - DONE */
         //requests desired payment method from user
         public static void PaymentMenu()
         {
+            Console.WriteLine();
             Console.WriteLine("Treat Yo'self by Drones accepts Cash, Check or Credit");
-            Console.WriteLine("Which method of payment would you like to use for this order?");
+            Console.WriteLine();
+            Console.WriteLine(">> Which method of payment would you like to use for this order?");
 
 
             userPaymentChoice = Validator.ValidPaymentMethod();
