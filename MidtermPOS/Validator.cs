@@ -19,6 +19,7 @@ namespace MidtermPOS
 
                 if (!validNum || convertNum < 0)
                 {
+                    Console.WriteLine();
                     Console.WriteLine("Invalid number entered, please enter a valid number.");
                     continue;
                 }
@@ -40,6 +41,7 @@ namespace MidtermPOS
 
                 if (!validNum || convertNum < 0)
                 {
+                    Console.WriteLine();
                     Console.WriteLine("Invalid number entered, please enter a valid number.");
                     continue;
                 }
@@ -62,6 +64,7 @@ namespace MidtermPOS
 
                 if (!validNum)
                 {
+                    Console.WriteLine();
                     Console.WriteLine("Invalid number entered, please enter a valid number.");
                     continue;
                 }
@@ -79,6 +82,7 @@ namespace MidtermPOS
             bool verifyingCheckNumn = true;
             while (verifyingCheckNumn)
             {
+                Console.WriteLine();
                 Console.WriteLine("Your Account and Routing number are already stored in our system.");
                 Console.WriteLine("Please locate and enter the 3 digit check number being used for this order.");
                 string _input = Console.ReadLine();
@@ -86,10 +90,12 @@ namespace MidtermPOS
                 bool validNum = int.TryParse(_input, out validnum);
                 if (!match.Success || validNum != true)
                 {
+                    Console.WriteLine();
                     Console.WriteLine("Invalid check number!");
                 }
                 else
                 {
+                    Console.WriteLine();
                     Console.WriteLine("Valid Check Number!");
                     verifyingCheckNumn = false;
                 }
@@ -105,18 +111,22 @@ namespace MidtermPOS
             bool verifying = true;
             while (verifying)
             {
-                Console.WriteLine("Please enter a valid amount of cash that will be paid.");
+                Console.WriteLine();
+                Console.WriteLine(">> Please enter a valid amount of cash that will be paid:");
+                Console.WriteLine();
                 string _input = Console.ReadLine();
                 bool validNum = double.TryParse(_input, out cashpaid);
 
                 if (!validNum)
                 {
+                    Console.WriteLine();
                     Console.WriteLine("Invalid cash amount.");
                     continue;
                 }
 
                 if (Program.grandtotal > cashpaid)
                 {
+                    Console.WriteLine();
                     Console.WriteLine($"You entered ${cashpaid} while the grand total is ${Program.grandtotal}");
                     continue;
                 }
@@ -140,8 +150,9 @@ namespace MidtermPOS
                 response = Console.ReadLine().ToLower();
                 if (response != "y" && response != "n")
                 {
+                    Console.WriteLine();
                     Console.WriteLine("Invalid response.");
-                    Console.WriteLine("Please enter (y/n).");
+                    Console.WriteLine(">> Please enter (y/n):");
                     continue;
                 }
                 else { askingYorN = false; }
@@ -159,7 +170,8 @@ namespace MidtermPOS
 
                 if (!(input == "cash") && !(input == "credit") && !(input == "check") && !(input == "gift card"))
                 {
-                    Console.WriteLine("Invalid payment method entered. Please enter either cash, check or credit.");
+                    Console.WriteLine();
+                    Console.WriteLine(">> Invalid payment method entered. Please enter either cash, check or credit:");
 
                 }
                 else
@@ -179,7 +191,8 @@ namespace MidtermPOS
             while (askingforDaCC)
             {
                 //user prompted to enter a CC num (comes in as string)
-                Console.WriteLine("Please enter a valid Visa/Mastercard credit card number. ");
+                Console.WriteLine();
+                Console.WriteLine(">> Please enter a valid Visa/Mastercard credit card number:");
                 string _input = Console.ReadLine();
 
 
@@ -187,7 +200,8 @@ namespace MidtermPOS
                 bool validNum = long.TryParse(_input, out long convertNum);
                 if (!validNum)
                 {
-                    Console.WriteLine("Invalid number entered, please enter a valid number.");
+                    Console.WriteLine();
+                    Console.WriteLine(">> Invalid number entered, please enter a valid number:");
                     continue;
                 }
 
@@ -196,7 +210,7 @@ namespace MidtermPOS
                     if (Regex.IsMatch(convertNum.ToString(), "^([0-9]){16}$"))
 
                     {
-
+                        Console.WriteLine();
                         Console.WriteLine("Thank you for entering a credit card number!");
                         askingforDaCC = false;
                     }
@@ -204,6 +218,7 @@ namespace MidtermPOS
                     // (valid doubles entered at input and valid CC format, per regex)
                     else
                     {
+                        Console.WriteLine();
                         Console.WriteLine("You've entered an invalid credit card number");
                         continue;
                     }
@@ -213,7 +228,8 @@ namespace MidtermPOS
             bool AskForExpDate = true;
             while (AskForExpDate)
             {
-                Console.WriteLine("Please enter a valid Expiration Date for the card.\nFormat: mm/YY");
+                Console.WriteLine();
+                Console.WriteLine(">> Please enter a valid Expiration Date for the card.\nFormat: mm/YY:");
                 string _i = Console.ReadLine();
                 DateTime expDate;
                 string format = "MM/yy";
@@ -225,7 +241,8 @@ namespace MidtermPOS
                 if (result < 0)
 
                 {
-                    Console.WriteLine("You've entered an invalid expiration date");
+                    Console.WriteLine();
+                    Console.WriteLine("You've entered an invalid expiration date.");
                     continue;
                 }
                 else
@@ -237,14 +254,16 @@ namespace MidtermPOS
             bool AskForCVV = true;
             while (AskForCVV)
             {
-                Console.WriteLine("Please enter a valid 3 digit CVV");
+                Console.WriteLine();
+                Console.WriteLine(">> Please enter a valid 3 digit CVV:");
                 string _input = Console.ReadLine();
 
                 //converts to int, if _input is integers
                 bool validNum = int.TryParse(_input, out int convertNum);
                 if (!validNum)
                 {
-                    Console.WriteLine("Invalid CVV number entered, please enter a valid 3 digit CVV.");
+                    Console.WriteLine();
+                    Console.WriteLine(">> Invalid CVV number entered, please enter a valid 3 digit CVV:");
                     continue;
                 }
 
@@ -253,7 +272,7 @@ namespace MidtermPOS
                     if (Regex.IsMatch(convertNum.ToString(), "^([0-9]){3}$"))
 
                     {
-
+                        Console.WriteLine();
                         Console.WriteLine("Thank you for entering a valid CVV number!");
                         AskForCVV = false;
                     }
@@ -261,7 +280,8 @@ namespace MidtermPOS
                     // (valid doubles entered at input and valid CC format, per regex)
                     else
                     {
-                        Console.WriteLine("You've entered an invalid CVV number");
+                        Console.WriteLine();
+                        Console.WriteLine("You've entered an invalid CVV number.");
                         continue;
                     }
 
