@@ -154,7 +154,7 @@ asks for another order - DONE */
         // prompts user for a response re placing another order, last method of main arg.
         public static bool AskToOrderAgainQ()
         {
-            Console.WriteLine("Would you like to place another order? (y/n)");
+            Console.WriteLine("\nWould you like to place another order? (y/n)");
             string userresponse = Validator.GetAValidYorN();
             if (userresponse == "y")
             {
@@ -163,6 +163,7 @@ asks for another order - DONE */
             else
             {
                 Console.WriteLine("Thank you for ordering from Treat Yo'self!");
+                Console.WriteLine("Press enter to exit...");
                 Console.ReadKey();
                 return false;
             }
@@ -332,8 +333,8 @@ asks for another order - DONE */
             Console.WriteLine("\nSHOPPING CART:");
 
             //Headers for Shopping Cart
-            Console.WriteLine($"\n{"NAME",-28}{"QTY",-19}{"TOTAL",-7}");
-            Console.WriteLine("=========================   =============      ======\n");
+            Console.WriteLine($"\n{"NAME",-34}{"QTY",-19}{"TOTAL",-15}");
+            Console.WriteLine("===============================   =============      ===========\n");
 
             int cartCount = 0;
             foreach (Product c in Product.cartList)
@@ -358,7 +359,7 @@ asks for another order - DONE */
         //requests desired payment method from user
         public static void PaymentMenu()
         {
-            Console.WriteLine("Treat Yo'self by Drones accepts Cash, Check or Credit");
+            Console.WriteLine("\nTreat Yo'self by Drones accepts \"Cash\", \"Check\" or \"Credit\"");
             Console.WriteLine("Which method of payment would you like to use for this order?");
 
 
@@ -369,7 +370,9 @@ asks for another order - DONE */
                 Validator.ValidCashAmount();
             }
             else if (userPaymentChoice == "check")
-            {
+            { 
+                Validator.ValidChkAcctNumber();
+                Validator.ValidRoutingNumber();
                 Validator.ValidCheckNumber();
             }
             else if (userPaymentChoice == "credit")
@@ -388,7 +391,7 @@ asks for another order - DONE */
             double cartTotalPrice = 0;
             Console.WriteLine("\n\nRECEIPT\n");
             Console.WriteLine($"{"NAME",-28}{"QTY",-19}{"TOTAL",-7}");
-            Console.WriteLine("=========================   =============      ======\n");
+            Console.WriteLine("=========================   =============      ===========\n");
             foreach (Product c in Product.cartList)
             {
                 double groupprice = (c.Quantity * c.Price);
@@ -403,7 +406,7 @@ asks for another order - DONE */
             Console.WriteLine($"{"METHOD OF PAYMENT",-20}   {userPaymentChoice,10:F2}");
 
             Console.WriteLine($"{"YOUR PAYMENT",-20} $ {Validator.cashpaid,10:F2}");
-            Console.WriteLine($"{"YOUR CHANGE",-20} $ {changeGiven,10:F2}");
+            //Console.WriteLine($"{"YOUR CHANGE",-20} $ {changeGiven,10:F2}");
         
         
        

@@ -58,14 +58,14 @@ namespace MidtermPOS
             bool verifyingCheckNumn = true;
             while (verifyingCheckNumn)
             {
-                Console.WriteLine("Your Account and Routing number are already stored in our system.");
-                Console.WriteLine("Please locate and enter the 3 digit check number being used for this order.");
+                
+                Console.WriteLine("\nPlease locate and enter the 4 digit check number being used for this order.");
                 string _input = Console.ReadLine();
-                Match match = Regex.Match(_input,"^[0-9]{3}$");
+                Match match = Regex.Match(_input,"^[0-9]{4}$");
                 bool validNum = int.TryParse(_input, out validnum);
                 if (!match.Success || validNum != true)
                 {
-                    Console.WriteLine("Invalid check number!");
+                    Console.WriteLine("Invalid Check Number!");
                 }
                 else
                 {
@@ -76,6 +76,62 @@ namespace MidtermPOS
             }
             return validnum;
         }
+
+        //Method for verifying a valid routing number for checking account
+        //Converts string input to an int, regex for 9 digit routing number format.  Will return a valid routing number.
+        public static int ValidRoutingNumber()
+        {
+            int validRouteNum = 0;
+            bool verifyingRouteNum = true;
+            while (verifyingRouteNum)
+            {
+                Console.WriteLine("\nPlease enter your 9 digit Routing Number.");
+                string routenum = Console.ReadLine();
+                Match matchroute = Regex.Match(routenum, "^[0-9]{9}$");
+                bool validRouteNum1 = int.TryParse(routenum, out validRouteNum);
+                if (!matchroute.Success || validRouteNum1 != true)
+                {
+                    Console.WriteLine("Invalid Routing Number!");
+                }
+                else
+                {
+                    Console.WriteLine("Valid Routing Number!");
+                    verifyingRouteNum = false;
+                }
+
+            }
+            return validRouteNum;
+        }
+
+
+
+        //Method for verifying a valid checking account number
+        //Converts string input to an int, regex for 8 digit checking account number format.  Will return a valid checking account number.
+        public static int ValidChkAcctNumber()
+        {
+            int validChkAcctNum = 0;
+            bool verifyingChkAcctNum = true;
+            while (verifyingChkAcctNum)
+            {
+                Console.WriteLine("\nChecking Account information is required inorder to process check payment.");
+                Console.WriteLine("Please enter your 8 digit Checking Account Number.");
+                string chkacctnum = Console.ReadLine();
+                Match matchchkacct = Regex.Match(chkacctnum, "^[0-9]{8}$");
+                bool validChkAcctNum1 = int.TryParse(chkacctnum, out validChkAcctNum);
+                if (!matchchkacct.Success || validChkAcctNum1 != true)
+                {
+                    Console.WriteLine("Invalid Checking Account number!");
+                }
+                else
+                {
+                    Console.WriteLine("Valid Checking Account Number!");
+                    verifyingChkAcctNum = false;
+                }
+
+            }
+            return validChkAcctNum;
+        }
+
         public static double cashpaid = 0;
         // converts a string input into cash and change. returns cash value in "double".
         public static double ValidCashAmount()
@@ -158,7 +214,7 @@ namespace MidtermPOS
             while (askingforDaCC)
             {
                 //user prompted to enter a CC num (comes in as string)
-                Console.WriteLine("Please enter a valid Visa/Mastercard credit card number. ");
+                Console.WriteLine("Please enter a valid 16 digit Visa/Mastercard credit card number. No spaces");
                 string _input = Console.ReadLine();
 
 
