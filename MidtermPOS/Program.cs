@@ -31,26 +31,11 @@ asks for another order - DONE */
         {
             // welcomes the user
             Console.WriteLine("Welcome to Treat Ya'self by Drones");
-           //AddToProductList();
+           
             //runs the shoppingcart method
             ShoppingCart();            
 
-        }
-
-        //private static void AddToProductList()
-        //{
-        //    string name = "shampoo";
-        //    string category = "item";
-        //    string description = "cleans your hair";
-        //    int price = 10;
-
-        //    using (FileStream fs = new FileStream("Product List.txt", FileMode.Append, FileAccess.Write))
-        //    using (StreamWriter sw = new StreamWriter(fs))
-        //    {
-
-        //        sw.WriteLine($"\n{name}\t{category}\t{description}\t{price}\t");
-        //    }
-        //}
+        }       
 
         // shopping cart method (1)
         public static void ShoppingCart()
@@ -316,25 +301,13 @@ asks for another order - DONE */
             Console.WriteLine($"{"TAX",-20} $ {(cartTotalPrice * .06),10:F2}");
             Console.WriteLine($"{"GRAND TOTAL",-20} $ {grandtotal,10:F2}");
             Console.WriteLine($"{"METHOD OF PAYMENT",-20}   {userPaymentChoice,10:F2}");
-<<<<<<< HEAD
+
             Console.WriteLine($"{"YOUR PAYMENT",-20} $ {Validator.cashpaid,10:F2}");
             Console.WriteLine($"{"YOUR CHANGE",-20} $ {changeGiven,10:F2}");
-        } 
         
-        //private static void AddToProductList()
-        //{
-        //    string name = "shampoo";
-        //    string category = "item";
-        //    string description = "cleans your hair";
-        //    int price = 10;
+        
+       
 
-        //    using (FileStream fs = new FileStream("Product List.txt", FileMode.Append, FileAccess.Write))
-        //    using (StreamWriter sw = new StreamWriter(fs))            {            
-
-        //        sw.WriteLine($"\n{name}\t{category}\t{description}\t{price}\t");
-        //    }
-        //}
-=======
             if (userPaymentChoice == "cash")
             {
                 Console.WriteLine($"{"YOUR PAYMENT",-20} $ {Validator.cashpaid,10:F2}");
@@ -348,7 +321,7 @@ asks for another order - DONE */
 
         }
 
->>>>>>> 715e9dedf6a2f2ec26fe9359c9932e71aef001bd
+
 
     }
 }
