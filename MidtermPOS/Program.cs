@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace MidtermPOS
 {/* POS
@@ -32,7 +33,7 @@ asks for another order - DONE */
         {
             // welcomes the user
             Console.WriteLine("Welcome to Treat Yo'self by Drones");
-
+            AccessAdmin();
             //runs the shoppingcart method
             ShoppingCart();
 
@@ -466,7 +467,103 @@ asks for another order - DONE */
             {
                 Console.WriteLine($"{"PAYMENT SUBMITTED FOR APPROVAL",-20}");
             }
+        }
 
+        // Admin methods
+
+        public static void AccessAdmin()
+        {
+            Product.FileImport();
+
+            Console.WriteLine("Press enter to view drone services and items.");
+            string login = Console.ReadLine();
+            if (login == "admin")
+            {
+                bool askForUsername = true;
+                while (askForUsername)
+                {
+                    Console.WriteLine("\nLog In\nPlease enter your username. \n(Case sensitive)");
+                    string username = Console.ReadLine();
+                    if (!(username == "admin"))
+                    {
+                        Console.WriteLine("That was an invalid username. Please try again.");
+                    }
+                    else
+                    {
+                        askForUsername = false;
+                    }
+                }
+
+                bool askForPass = true;
+                while (askForPass == true)
+                {
+                    Console.WriteLine("Please enter your password. \n(Case sensitive)");
+                    string password = Console.ReadLine();
+                    if (!(password == "admin"))
+                    {
+                        Console.WriteLine("That was an invalid password. Please try again.");
+                    }
+                    else
+                    {
+                        askForPass = false;
+                    }
+                }
+
+                AddToProductList();
+
+            }
+        }
+
+        // Admin methods
+        private static void AddToProductList()
+        {
+
+            bool keepgoing = true;
+            while (keepgoing)
+            {
+                PrintMenu();
+                Console.WriteLine("What is the name of the product you would like to add?");
+                string name = Console.ReadLine();
+                string category = " ";
+                bool askForCategory = true;
+                while (askForCategory)
+                {
+                    Console.WriteLine("Which category does this product belong in? Service or Item?");
+                    category = Console.ReadLine();
+                    if (!(category.ToLower() == "service") && !(category.ToLower() == "item"))
+                    {
+                        Console.WriteLine("That is not a category. Please try again");
+                    }
+                    else
+                    {
+                        askForCategory = false;
+                    }
+                }
+                Console.WriteLine("Please give a description of the product");
+                string description = Console.ReadLine();
+
+                Console.WriteLine("How much will this product cost?");
+                double price = Validator.ValidDoubler();
+
+                using (StreamWriter addingProduct = new StreamWriter("Product List.txt", true))
+                {
+                    addingProduct.WriteLine($"{name}\t{category}\t{description}\t{price}");
+                    addingProduct.Close();
+                    
+                }
+                Product.products.Add(new Product(name, category, description, price));
+                
+
+
+
+                Console.WriteLine("Would you like to add another product? \nEnter (y/n)");
+                string asking = Validator.GetAValidYorN();
+                if (asking.ToLower() == "n")
+                {
+                    List<Product> products = Product.FileImport();
+                    keepgoing = false;
+                }
+            }
 
         }
 
