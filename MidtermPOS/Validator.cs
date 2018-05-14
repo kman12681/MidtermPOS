@@ -29,6 +29,27 @@ namespace MidtermPOS
             return convertNum;
         }
 
+        // converts string input to a whole num, loops until valid whole num is entered. returns a valid whole num.
+        public static int ValidNumAndConvertToWholeNumCartEdit(string _input)
+        {
+            int convertNum = 0;
+            bool verifying = true;
+            while (verifying)
+            {
+                bool validNum = int.TryParse(_input, out convertNum);
+
+                if (!validNum || convertNum < 0)
+                {
+                    Console.WriteLine("Invalid number entered, please enter a valid number.");
+                    continue;
+                }
+                else
+                { verifying = false; }
+
+            }
+            return convertNum;
+        }
+
         //converts string input to a double num loops until valid double num is entered. returns a valid double num.
         public static double ValidDoubler()
         {
