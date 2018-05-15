@@ -96,7 +96,7 @@ namespace MidtermPOS
                 if (!match.Success || validNum != true)
                 {
                     Console.WriteLine();
-                    Console.WriteLine("Invalid check number!");
+                    Console.WriteLine("Invalid Check Number!");
                 }
                 else
                 {
