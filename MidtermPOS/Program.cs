@@ -141,18 +141,23 @@ asks for another order - DONE */
             while (completingorder)
             {
                 Console.WriteLine();
-                Console.WriteLine(">> Would you like to complete, return to the main menu, or cancel this order?\n\nType \"complete\" to complete, \"menu\" to return to the menu or \"cancel\" to cancel:");
+                Console.WriteLine(">> Would you like to complete purchase, return to the main menu, or cancel this order?\n\nType \"complete\" to complete, \"menu\" to return to the menu, or \"cancel\" to cancel:");
                 Console.WriteLine();
                 string completePurchQ = Console.ReadLine().ToLower();
                 if (completePurchQ == "cancel")
                 {
                     Console.WriteLine();
-                    Console.WriteLine("Are you sure you want to cancel this order? (y/n)");
+                    Console.WriteLine(">> Are you sure you want to cancel this order? (y/n)");
                     string areYouSureq = Validator.GetAValidYorN();
                     if (areYouSureq == "y")
                     {
-                        Console.WriteLine("Order cancelled.");
+                        Console.WriteLine();
+                        Console.WriteLine("---------- ORDER CANCELLED ----------");
                         Product.cartList.Clear();
+                        Console.WriteLine();
+                        Console.WriteLine(">> Press any key to continue");
+                        Console.ReadKey();
+                            
                         completingorder = false;
                         orderComplete = false;
                     }
@@ -334,7 +339,7 @@ asks for another order - DONE */
                     }
                     if (qtyPick == 0)
                     {
-                        Product.cartList.RemoveAt(userpick);
+                        Product.cartList.RemoveAt(userpick - 1);
                         Console.WriteLine();
                         Console.WriteLine("Cart item removed!");
                         PrintMenu();
@@ -522,80 +527,141 @@ asks for another order - DONE */
                 }
 
                 AddToProductList();
+
             }
         }
 
-        // Admin methods
+        //admin method
         private static void AddToProductList()
         {
+
+            PrintMenu();
+
             bool keepgoing = true;
             while (keepgoing)
             {
-                PrintMenu();
                 Console.WriteLine();
-                Console.WriteLine(">> What is the name of the product you would like to add?:");
+                Console.WriteLine(">> What is the name of the product you would like to add? (or \"pos\" to exit admin functions and turn on POS terminal):");
                 Console.WriteLine();
                 string name = Console.ReadLine();
-                string category = " ";
-                bool askForCategory = true;
-                while (askForCategory)
+                if (name.ToLower() == "pos")
                 {
                     Console.WriteLine();
-                    Console.WriteLine(">> Which category does this product belong in? Service or Item?:");
+                    keepgoing = false;
+                }
+                else
+                {
                     Console.WriteLine();
-                    category = Console.ReadLine();
-                    if (!(category.ToLower() == "service") && !(category.ToLower() == "item"))
+                    Console.WriteLine($"You entered: \"{name}\"\nIs this correct? (y/n)");
+                    Console.WriteLine();
+                    string userresponse = Validator.GetAValidYorN();
+                    if (userresponse == "y")
                     {
-                        Console.WriteLine();
-                        Console.WriteLine("That is not a category. Please try again");
+                        keepgoing = true;
                     }
                     else
                     {
-                        askForCategory = false;
-                    }
-                }
-                Console.WriteLine();
-                Console.WriteLine(">> Please give a description of the product:");
-                Console.WriteLine();
-                string description = Console.ReadLine();
-
-                Console.WriteLine();
-                Console.WriteLine(">> How much will this product cost?:");
-                Console.WriteLine();
-                double price = Validator.ValidDoubler();
-
-                using (StreamWriter addingProduct = new StreamWriter("Product List.txt", true))
-                {
-                    addingProduct.WriteLine($"{name}\t{category}\t{description}\t{price}");
-                    addingProduct.Close();
-
-                }
-                Product.products.Add(new Product(name, category, description, price));
-
-                bool posAdd = true;
-                while (posAdd)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine(">> Would you like to add another product or turn on the POS terminal? (add / pos):");
-
-                    Console.WriteLine();
-                    string asking = Console.ReadLine();
-                    if (asking.ToLower() != "add" && asking.ToLower() != "pos")
-                    {
-                        Console.WriteLine("Invalid entry.");
                         continue;
                     }
-                    else
+
+                    string category = " ";
+                    bool askForCategory = true;
+                    while (askForCategory)
                     {
-                        List<Product> products = Product.FileImport();
-                        posAdd = false;
+                        Console.WriteLine();
+                        Console.WriteLine(">> Which category does this product belong in? Service or Item?:");
+                        Console.WriteLine();
+                        category = Console.ReadLine();
+                        if (!(category.ToLower() == "service") && !(category.ToLower() == "item"))
+                        {
+                            Console.WriteLine();
+                            Console.WriteLine("That is not a category. Please try again");
+                        }
+                        else
+                        {
+                            Console.WriteLine();
+                            Console.WriteLine($"You entered: \"{category}\"\nIs this correct? (y/n)");
+                            Console.WriteLine();
+                            string userresponse2 = Validator.GetAValidYorN();
+                            if (userresponse2 == "y")
+                            {
+                                askForCategory = false;
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
                     }
-                    keepgoing = false;
+
+                    string description = " ";
+                    bool askForDescription = true;
+                    while (askForDescription)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine(">> Please give a description of the product:");
+                        Console.WriteLine();
+                        description = Console.ReadLine();
+                        Console.WriteLine();
+                        Console.WriteLine($"You entered: \"{description}\"\nIs this correct? (y/n)");
+                        Console.WriteLine();
+                        string userresponse2 = Validator.GetAValidYorN();
+                        if (userresponse2 == "y")
+                        {
+                            askForDescription = false;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+
+                    double price = 0;
+                    bool askForPrice = true;
+                    while (askForPrice)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine(">> How much will this product cost?:");
+                        Console.WriteLine();
+                        price = Validator.ValidDoubler();
+                        Console.WriteLine();
+                        Console.WriteLine($"You entered: \"{price}\"\nIs this correct? (y/n)");
+                        Console.WriteLine();
+                        string userresponse2 = Validator.GetAValidYorN();
+                        if (userresponse2 == "y")
+                        {
+                            askForPrice = false;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                    using (StreamWriter addingProduct = new StreamWriter("Product List.txt", true))
+                    {
+                        addingProduct.WriteLine($"{name}\t{category}\t{description}\t{price}");
+                        addingProduct.Close();
+
+                    }
+                    Product.products.Add(new Product(name, category, description, price));
+                    
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("Would you like to add another product? \nEnter (y/n)");
+                        string asking = Validator.GetAValidYorN();
+                        if (asking.ToLower() == "n")
+                        {
+                            List<Product> products = Product.FileImport();
+                            keepgoing = false;
+                        }
+                    }
                 }
             }
         }
     }
 }
+
+
 
 
 

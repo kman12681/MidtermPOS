@@ -66,7 +66,7 @@ namespace MidtermPOS
                 string _input = Console.ReadLine();
                 bool validNum = double.TryParse(_input, out convertNum);
 
-                if (!validNum)
+                if (!validNum || convertNum < 0)
                 {
                     Console.WriteLine();
                     Console.WriteLine("Invalid number entered, please enter a valid number.");

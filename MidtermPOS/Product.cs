@@ -58,7 +58,8 @@ namespace MidtermPOS
 
 
                         Product p = new Product(name, category, description, price);
-                        products.Add(p);
+                        products.Add(p);                        
+                        
                     }
                 }
                 catch (Exception)
@@ -75,8 +76,8 @@ namespace MidtermPOS
 
                 return products;
             }
-        }
-
+        }       
+      
         public override string ToString()
         {
 
