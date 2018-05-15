@@ -1,0 +1,12 @@
+Haircut	Service	Hair on scalp will be cut and styled to client specifications	15
+Shave	Service	Single blade shave	10
+Manicure	Service	Cosmetic treatment for hands. Removes cuticles and softens the skin	15
+Pedicure	Service	Cosmetic treatment for feet. Removes cuticles and softens the skin	40
+Swedish Drone-ish Massage	Service	Drone therapist treats client by using touch to manipulate the soft tissues of the body. 45 minutes	50
+Waxing	Service	Semi-permanent hair removal which removes the hair from the root	45
+Teeth Whitening	Service	Whitens teeth and helps to remove stains and discoloration	25
+Drone-uppuncture	Service	Involves the insertion of very thin needles through your skin at strategic points on your body	80
+Dry Brush	Item	Promotes blood circulation throughout the body	5
+Lotion	Item	Used combat dry skin	10
+Hair Gel	Item	Used for hair styling	10
+Shoe Shine	Item	Cleans and brightens your shoes	5
