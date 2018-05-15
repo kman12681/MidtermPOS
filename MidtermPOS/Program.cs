@@ -37,6 +37,7 @@ asks for another order - DONE */
             Console.WriteLine("------------------------------------------");
             Console.WriteLine();
             Console.WriteLine("   Welcome to Treat Yo'self by Drones");
+            Console.WriteLine("  The Premier Drone Lead  Spa Servicer");
             Console.WriteLine();
             Console.WriteLine("------------------------------------------");
 
@@ -147,12 +148,17 @@ asks for another order - DONE */
                 if (completePurchQ == "cancel")
                 {
                     Console.WriteLine();
-                    Console.WriteLine("Are you sure you want to cancel this order? (y/n)");
+                    Console.WriteLine(">> Are you sure you want to cancel this order? (y/n)");
                     string areYouSureq = Validator.GetAValidYorN();
                     if (areYouSureq == "y")
                     {
-                        Console.WriteLine("Order cancelled.");
+                        Console.WriteLine();
+                        Console.WriteLine("---------- ORDER CANCELLED ----------");
                         Product.cartList.Clear();
+                        Console.WriteLine();
+                        Console.WriteLine(">> Press any key to continue");
+                        Console.ReadKey();
+
                         completingorder = false;
                         orderComplete = false;
                     }
@@ -198,6 +204,7 @@ asks for another order - DONE */
             {
                 Console.WriteLine();
                 Console.WriteLine("Thank you for ordering from Treat Yo'self!");
+                Console.WriteLine("Press enter to exit program...");
                 Console.ReadKey();
                 return false;
             }
@@ -334,7 +341,7 @@ asks for another order - DONE */
                     }
                     if (qtyPick == 0)
                     {
-                        Product.cartList.RemoveAt(userpick-1);
+                        Product.cartList.RemoveAt(userpick - 1);
                         Console.WriteLine();
                         Console.WriteLine("Cart item removed!");
                         PrintMenu();
@@ -391,6 +398,7 @@ asks for another order - DONE */
             Console.WriteLine("\nSHOPPING CART:");
 
             //Headers for Shopping Cart
+            //Column widths added, negative number aligns text on the left
             Console.WriteLine($"\n{"CART ID",-8}{"NAME",-29} {"QTY",-17}  {"TOTAL",-7}");
             Console.WriteLine("======= ===========================   =============      ======\n");
 
@@ -406,6 +414,8 @@ asks for another order - DONE */
 
 
             grandtotal = (cartTotalPrice * .06) + cartTotalPrice;
+            //Column widths added, negative number aligns text on the left
+            //F2 formats double to only two decimal places
             Console.WriteLine($"\n\n{"SUBTOTAL",-15} $ {cartTotalPrice,10:F2}");
             Console.WriteLine($"{"TAX",-15} $ {(cartTotalPrice * .06),10:F2}");
             Console.WriteLine($"{"GRAND TOTAL",-15} $ {grandtotal,10:F2}");
@@ -434,7 +444,7 @@ asks for another order - DONE */
             }
             else if (userPaymentChoice == "check")
             {
-                Validator.ValidCheckNumber();
+                Validator.ValidChkAcctNumber();
                 Validator.ValidRoutingNumber();
                 Validator.ValidCheckNumber();
             }
@@ -652,3 +662,5 @@ asks for another order - DONE */
                 }
             }
         }
+    }
+}
