@@ -438,8 +438,7 @@ asks for another order - DONE */
                 Validator.ValidCashAmount();
             }
             else if (userPaymentChoice == "check")
-            {
-                Validator.ValidCheckNumber();
+            {                
                 Validator.ValidRoutingNumber();
                 Validator.ValidCheckNumber();
             }
